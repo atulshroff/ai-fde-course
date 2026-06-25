@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Foundations → Forward Deployed Engineer · 6-Month Course</title>
+<style>
+:root{
+  --bg:#0f1220; --panel:#171b2e; --panel2:#1e2440; --ink:#e9ecf7; --muted:#a6acc8;
+  --accent:#6c8cff; --accent2:#39d3bb; --good:#2ecc71; --bad:#ff6b6b; --line:#2a3154;
+  --code:#0b0e1a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:linear-gradient(160deg,#0e1120,#12162a);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+header.top{display:flex;align-items:center;gap:12px;padding:14px 20px;
+  background:rgba(20,24,44,.85);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;backdrop-filter:blur(8px)}
+header.top .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#0b0e1a;flex:none}
+header.top h1{font-size:15px;margin:0;font-weight:700}
+header.top p{font-size:12px;margin:0;color:var(--muted)}
+.rightctl{margin-left:auto;display:flex;align-items:center;gap:14px}
+#menuBtn{display:none;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+  border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+.progwrap{display:flex;align-items:center;gap:10px;min-width:180px}
+.progbar{flex:1;height:8px;background:var(--panel2);border-radius:6px;overflow:hidden;min-width:110px}
+.progfill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
+.progtxt{font-size:12px;color:var(--muted);white-space:nowrap}
+/* ---- profiles ---- */
+.profilearea{position:relative}
+.pchip{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px 5px 6px;cursor:pointer;color:var(--ink);font-size:13px;font-weight:600}
+.pchip:hover{border-color:var(--accent)}
+.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0b0e1a;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:none}
+.pchip .cv{color:var(--muted);font-size:11px}
+.pmenu{position:absolute;right:0;top:46px;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:8px;min-width:240px;box-shadow:0 14px 44px rgba(0,0,0,.55);z-index:45;display:none}
+.pmenu.open{display:block}
+.pmenu .ph{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:6px 8px}
+.pi{display:flex;align-items:center;gap:9px;padding:8px;border-radius:9px;cursor:pointer;font-size:14px;color:var(--ink)}
+.pi:hover{background:var(--panel2)}
+.pi .av{width:24px;height:24px;font-size:12px}
+.pi.activeP{background:linear-gradient(135deg,rgba(108,140,255,.18),rgba(57,211,187,.12))}
+.pi .pinfo{margin-left:auto;font-size:12px;color:var(--muted)}
+.pi .pdel{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 4px;margin-left:6px}
+.pi .pdel:hover{color:var(--bad)}
+.pi.padd{color:var(--accent2);font-weight:600}
+.pi.padd .av{background:var(--panel2);color:var(--accent2);border:1px dashed var(--line)}
+/* ---- profile gate ---- */
+.gate{max-width:480px;margin:7vh auto;text-align:center;background:var(--panel);border:1px solid var(--line);
+  border-radius:18px;padding:34px 30px}
+.gate h2{font-size:24px;margin:0 0 6px}
+.gate .gsub{color:var(--muted);font-size:14px;margin:0 0 22px}
+.plist{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.gateprof{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;cursor:pointer;color:var(--ink);font-size:15px;font-weight:600;text-align:left}
+.gateprof:hover{border-color:var(--accent)}
+.gateprof .gpct{margin-left:auto;font-size:13px;color:var(--muted);font-weight:500}
+.gdiv{color:var(--muted);font-size:12px;margin:6px 0 14px;text-transform:uppercase;letter-spacing:.08em}
+.gadd{display:flex;gap:8px}
+.gadd input{flex:1;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:11px 14px;
+  color:var(--ink);font-size:14px}
+.gadd input:focus{outline:none;border-color:var(--accent)}
+.layout{display:flex;min-height:calc(100vh - 63px)}
+aside{width:300px;flex:none;background:rgba(18,22,40,.6);border-right:1px solid var(--line);
+  padding:14px 10px 28px;overflow-y:auto;max-height:calc(100vh - 63px);position:sticky;top:63px}
+.grp{margin:6px 4px 2px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);
+  font-weight:700;padding:10px 8px 4px;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none}
+.grp .chev{transition:transform .2s;font-size:10px;color:var(--muted)}
+.grp.collapsed .chev{transform:rotate(-90deg)}
+.navitem{display:flex;align-items:center;gap:9px;padding:8px 10px;margin:2px 4px;border-radius:9px;
+  font-size:13.5px;color:var(--muted);cursor:pointer}
+.navitem:hover{background:var(--panel2);color:var(--ink)}
+.navitem.active{background:linear-gradient(135deg,rgba(108,140,255,.22),rgba(57,211,187,.16));color:#fff;font-weight:600}
+.navitem .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:11px}
+.navitem.done .dot{background:var(--good);border-color:var(--good);color:#0b0e1a}
+.navhide{display:none}
+main{flex:1;padding:30px 7vw 80px;max-width:920px;margin:0 auto;width:100%}
+.lesson h2{font-size:26px;margin:0 0 6px;line-height:1.25}
+.obj{color:var(--accent2);font-size:14px;margin:0 0 22px;font-weight:600}
+.lesson h3{font-size:18px;margin:26px 0 8px}
+.lesson p{margin:12px 0;color:#dfe3f5}
+.lesson ul,.lesson ol{margin:12px 0;padding-left:22px;color:#dfe3f5}
+.lesson li{margin:6px 0}
+.callout{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line);font-size:14.5px}
+.callout .ct{font-weight:700;margin-bottom:4px;display:block}
+.c-key{background:rgba(108,140,255,.12);border-color:rgba(108,140,255,.4)}
+.c-an{background:rgba(57,211,187,.10);border-color:rgba(57,211,187,.35)}
+.c-try{background:rgba(255,196,84,.10);border-color:rgba(255,196,84,.40)}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:0;margin:16px 0;overflow:hidden;position:relative}
+pre .copybtn{position:absolute;top:8px;right:8px;background:var(--panel2);color:var(--muted);border:1px solid var(--line);
+  border-radius:7px;padding:4px 10px;font-size:12px;cursor:pointer;z-index:2}
+pre .copybtn:hover{color:#fff}
+pre code{display:block;padding:16px 16px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13px;
+  color:#d6e7ff;white-space:pre;overflow-x:auto;line-height:1.55}
+.cmt{color:#6f7aa3}
+.quiz{margin-top:30px;border-top:1px solid var(--line);padding-top:20px}
+.quiz h3{margin-top:0}
+.q{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+.q .qt{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+  border-radius:9px;padding:10px 12px;margin:7px 0;cursor:pointer;font-size:14px}
+.opt:hover{border-color:var(--accent)}
+.opt.correct{background:rgba(46,204,113,.18);border-color:var(--good)}
+.opt.wrong{background:rgba(255,107,107,.16);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:13.5px;padding:8px 10px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:rgba(46,204,113,.12);color:#bff0d0}
+.fb.no{background:rgba(255,107,107,.12);color:#ffc9c9}
+.navbtns{display:flex;justify-content:space-between;gap:12px;margin-top:34px}
+.btn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;
+  padding:11px 16px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0e1a;border:none}
+.btn:disabled{opacity:.35;cursor:default}
+.resetbtn{margin:18px 8px 0;width:calc(100% - 16px);background:transparent;color:var(--muted);
+  border:1px dashed var(--line);border-radius:9px;padding:8px;font-size:12px;cursor:pointer}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--good);
+  color:#06210f;padding:12px 20px;border-radius:10px;font-weight:700;opacity:0;transition:.35s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.finish .big{font-size:40px;margin:0}
+.mile{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:12px 14px;margin:8px 0}
+.mile .n{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0b0e1a;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+@media(max-width:768px){
+  aside{position:fixed;left:0;top:63px;bottom:0;z-index:25;transform:translateX(-105%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  aside.open{transform:translateX(0)}
+  #menuBtn{display:block}
+  .progwrap{display:none}
+  main{padding:24px 18px 80px}
+  .lesson h2{font-size:22px}
+}
+/* ---- course map flowchart ---- */
+.cmap{display:flex;flex-direction:column;align-items:center;margin:18px 0 6px}
+.cnode{width:100%;max-width:560px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px}
+.cnode .cm-h{display:flex;align-items:center;gap:12px}
+.cm-badge{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0b0e1a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.cnode h4{margin:0;font-size:16px}
+.cnode .cm-sub{color:var(--muted);font-size:13px;margin:3px 0 0}
+.cm-win{margin-top:11px;display:inline-flex;align-items:center;gap:6px;background:rgba(57,211,187,.12);
+  border:1px solid rgba(57,211,187,.35);color:#bff0d0;border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:600}
+.cconn{width:2px;height:22px;background:linear-gradient(var(--accent),var(--accent2))}
+.carrow{color:var(--accent2);font-size:16px;line-height:1}
+.ccap{width:100%;max-width:560px;text-align:center;border-radius:14px;padding:14px;font-weight:700;font-size:15px}
+.cstart{background:#1f6feb;color:#fff}
+.cgoal{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06210f}
+.cnext{background:#2a2140;border:1px solid #a78bfa;color:#e9d5ff;font-size:14px}
+/* ---- certificate ---- */
+.certwrap{position:fixed;inset:0;background:rgba(6,8,16,.86);z-index:60;display:none;align-items:center;
+  justify-content:center;padding:20px;overflow:auto}
+.certwrap.open{display:flex}
+.certbox{max-width:760px;width:100%}
+.cert{background:#0c1226;border:2px solid var(--accent2);border-radius:16px;padding:46px 40px;text-align:center;
+  position:relative;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+.cert::before{content:"";position:absolute;inset:10px;border:1px solid rgba(108,140,255,.35);border-radius:10px;pointer-events:none}
+.cert .seal{width:62px;height:62px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#06210f;display:flex;align-items:center;justify-content:center;font-size:28px}
+.cert .ck{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent2);font-weight:700}
+.cert h3{font-size:15px;color:var(--muted);font-weight:500;margin:18px 0 6px}
+.cert .cname{font-size:32px;font-weight:800;color:#fff;margin:4px 0 6px;
+  border-bottom:1px solid var(--line);display:inline-block;padding:0 18px 8px}
+.cert .ctitle{font-size:16px;color:#dfe3f5;margin:16px auto 0;max-width:470px;line-height:1.5}
+.cert .cmeta{display:flex;justify-content:space-between;margin-top:34px;color:var(--muted);font-size:12.5px;gap:16px}
+.cert .cmeta b{color:var(--ink);display:block;font-size:13.5px}
+.certactions{display:flex;gap:10px;justify-content:center;margin-top:16px}
+@media print{
+  body *{visibility:hidden!important}
+  .certwrap,.certwrap *{visibility:visible!important}
+  .certwrap{position:absolute;inset:0;background:#fff;display:block;padding:0}
+  .certactions{display:none!important}
+  .cert{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo">AI</div>
+  <div>
+    <h1>AI Foundations → Forward Deployed Engineer</h1>
+    <p>A 6-month, from-scratch course for Atul</p>
+  </div>
+  <div class="rightctl">
+    <div class="progwrap">
+      <div class="progbar"><div class="progfill" id="progfill"></div></div>
+      <span class="progtxt" id="progtxt">0%</span>
+    </div>
+    <div class="profilearea" id="profileArea"></div>
+    <button id="menuBtn" onclick="toggleSidebar()">☰ Lessons</button>
+  </div>
+</header>
+<div class="layout">
+  <aside id="sidebar"></aside>
+  <main id="main" class="lesson"></main>
+</div>
+<div class="toast" id="toast">Saved ✓</div>
+<div class="certwrap" id="certwrap"><div class="certbox">
+  <div class="cert">
+    <div class="seal">🎓</div>
+    <div class="ck">Certificate of Completion</div>
+    <h3>This certifies that</h3>
+    <div class="cname" id="certName">Learner</div>
+    <div class="ctitle">has completed all six months of <b>AI Foundations → Forward Deployed Engineer</b>, mastering AI fundamentals, Python, APIs, RAG, agents, and the FDE craft.</div>
+    <div class="cmeta">
+      <div>Completed<b id="certDate">—</b></div>
+      <div>Program<b>6-Month · 26 Weeks · 28 Lessons</b></div>
+    </div>
+  </div>
+  <div class="certactions">
+    <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <button class="btn" onclick="closeCertificate()">Close</button>
+  </div>
+</div></div>
+
+<script>
+const LESSONS = [];
+
+/* ============ WELCOME ============ */
+LESSONS.push({
+  id:"welcome", group:"Welcome", short:"Welcome & how to use this",
+  title:"Welcome — How to Use This Course",
+  objective:"By the end you'll know exactly how the next 6 months work.",
+  body:`
+  <p>Hi Atul. You're starting from zero — no coding, no AI background — and that's exactly who this course is built for. If you can use a web browser and type, you can do every single thing here.</p>
+  <h3>What's a Forward Deployed Engineer (FDE)?</h3>
+  <p>An FDE is an engineer who goes <em>to the customer</em> and builds working AI solutions inside the customer's real systems. Picture a company buying a powerful AI model but having no idea how to plug it into their messy, decades-old software. The FDE shows up, understands their actual problem, and builds the bridge that makes the AI useful for <em>them</em>. It's part engineer, part consultant, part firefighter — and it's one of the hottest, best-paid roles in tech right now.</p>
+  <h3>How the 6 months work</h3>
+  <p>Six modules, one per month, each with about four weekly lessons. Every week has the same simple rhythm:</p>
+  <ul>
+    <li><strong>Learn</strong> — read the lesson (taught from scratch).</li>
+    <li><strong>Do</strong> — a small hands-on task. You touch things, not just read.</li>
+    <li><strong>Win</strong> — a one-line checkpoint. If you can do it, move on.</li>
+  </ul>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Think of this like a gym membership for your brain. One short, consistent workout each week beats one giant exhausting session you never repeat.</div>
+  <h3>An honest note</h3>
+  <p>Six months at a few hours a week won't instantly make you a senior FDE — full paths to that role assume more like a year of steady work. What these six months <em>will</em> do is take you from "I don't understand any of this" to "I get how AI systems are built, I've written real code, and I've built small AI tools myself." That foundation is the hard part most people skip. We'll do it properly.</p>
+  <p>Start at 2–3 hours a week. If you can grow to 4–6 hours by Month 4 (when you start building bigger things), you'll go even further.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Type every code example by hand instead of copy-pasting. Reading code teaches your eyes; typing it teaches your hands.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Consistency beats intensity. One lesson per sitting, every week, and in six months you'll be a different person.</div>
+  `,
+  quiz:[{q:"What's the best way to pace this course?",options:["Binge all lessons in one weekend","One lesson per sitting, consistently each week","Skip ahead to the hard parts","Only read, never do the tasks"],answer:1,explain:"Small, steady steps win. Consistency beats intensity."}]
+});
+
+/* ============ COURSE MAP ============ */
+LESSONS.push({
+  id:"map", group:"Welcome", short:"🗺️ Course Map",
+  title:"Your 6-Month Course Map",
+  objective:"See the whole journey on one page — and where each month leads.",
+  body:`
+  <p>Here's the entire path you're about to take. Every month builds on the one before it, and each ends with something real you've built (a 🏆 milestone). Don't worry about understanding the words yet — by the time you reach each box, it'll feel natural.</p>
+  <div class="cmap">
+    <div class="ccap cstart">🚀 START — zero AI &amp; zero coding</div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M1</div><div><h4>Understand AI</h4><div class="cm-sub">How LLMs work · prompting · AI ethics — no code</div></div></div><div class="cm-win">🏆 A reusable prompt playbook</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M2</div><div><h4>Learn to Code</h4><div class="cm-sub">Python from zero in your browser — variables, logic, loops, functions</div></div></div><div class="cm-win">🏆 Your first function</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M3</div><div><h4>Connect Code to AI</h4><div class="cm-sub">APIs · API keys · your first AI calls from code</div></div></div><div class="cm-win">🏆 Your first AI tool</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M4</div><div><h4>Give AI Knowledge</h4><div class="cm-sub">Embeddings · vector search · RAG</div></div></div><div class="cm-win">🏆 A document Q&amp;A bot</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M5</div><div><h4>AI That Acts</h4><div class="cm-sub">Tool calling · agent loops · automation</div></div></div><div class="cm-win">🏆 A working automation</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">M6</div><div><h4>Ship It &amp; Become an FDE</h4><div class="cm-sub">Cloud · Git · deployment · the FDE craft · capstone</div></div></div><div class="cm-win">🏆 A capstone + portfolio</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="ccap cgoal">🎯 FDE-READY FOUNDATION + 3 portfolio projects</div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="ccap cnext">➡️ Phase 2: frameworks · real deployment · job hunt</div>
+  </div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Six connected months, each ending in something you built. Trust the path — when you finish, you'll have skills <em>and</em> proof.</div>
+  `,
+  quiz:[]
+});
+
+/* ============ MONTH 1 ============ */
+LESSONS.push({
+  id:"m1w1", group:"Month 1 — Understand AI", short:"W1 · What AI Actually Is",
+  title:"Month 1 · Week 1 — What AI Actually Is",
+  objective:"By the end you'll be able to explain what an AI model really does.",
+  body:`
+  <p>The "AI" everyone talks about today is mostly one thing: a <strong>Large Language Model</strong>, or <strong>LLM</strong>. ChatGPT, Claude, and Gemini are all LLMs. Underneath the magic, an LLM does something surprisingly simple — it <strong>predicts the next word</strong>.</p>
+  <p>It was trained by reading a staggering amount of text — books, websites, conversations — and learning the patterns of how words follow each other. So when you give it some words, it predicts what should come next, then the next, then the next, until it has written a whole answer.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>It's the autocomplete on your phone — on steroids. Your phone finishes "I'll be there in five → minutes." An LLM can finish a whole email, essay, or computer program, and do it impressively well.</div>
+  <h3>A quick example</h3>
+  <p>Type "The capital of France is" and the model answers "Paris." It isn't looking that up in a database — across the billions of sentences it learned from, "Paris" is overwhelmingly the word that follows. It's <em>predicting</em>, not <em>remembering</em>.</p>
+  <p>Once you see AI as a very sophisticated prediction machine rather than a thinking person, everything else in this course will make sense — including why it sometimes gets things confidently wrong (that's next week).</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free account on both ChatGPT (chat.openai.com) and Claude (claude.ai). Ask both the same 5 questions — mix easy facts with opinions. Notice where they shine and where they differ.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An LLM is autocomplete on steroids: it predicts likely text. It doesn't "know" things the way you do.</div>
+  `,
+  quiz:[
+    {q:"At its core, what does an LLM do?",options:["Looks up facts in a database","Predicts the most likely next words","Searches Google for you","Stores your files"],answer:1,explain:"An LLM generates text by predicting likely next words, one after another."},
+    {q:"When ChatGPT answers 'Paris' to 'The capital of France is…', it is…",options:["Retrieving a saved fact","Predicting the most likely next word","Calling a maps service","Guessing randomly"],answer:1,explain:"It predicts 'Paris' because that's what overwhelmingly follows in its training text."}
+  ]
+});
+LESSONS.push({
+  id:"m1w2", group:"Month 1 — Understand AI", short:"W2 · How AI Thinks (& Errs)",
+  title:"Month 1 · Week 2 — How AI Thinks (and Why It's Wrong Sometimes)",
+  objective:"By the end you'll be able to explain tokens, context, and hallucinations.",
+  body:`
+  <p>Three words you'll hear constantly. Let's demystify them.</p>
+  <h3>Tokens</h3>
+  <p>Models don't read whole words — they read <strong>tokens</strong>, little chunks of text. A token is roughly ¾ of a word. "Hamburger" might be 2–3 tokens. Models read, think, and are <em>priced</em> in tokens, so tokens are basically the currency of AI.</p>
+  <h3>The context window</h3>
+  <p>The <strong>context window</strong> is everything the model can "see" at once — your question, the recent conversation, and any documents you pasted. It's the model's short-term memory, and it has a limit.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Talking to an LLM is like briefing a brilliant temp worker with no memory of yesterday. Each time, you must hand them everything they need on a single page (the context window). When the page is full, the oldest notes fall off the bottom.</div>
+  <h3>Hallucinations</h3>
+  <p>Because the model predicts <em>likely-sounding</em> text, it will sometimes produce something that sounds right but is false. This is a <strong>hallucination</strong>.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Picture a very well-read student who never says "I don't know." Ask about a book they haven't read and they'll smoothly invent a plausible summary. Ask an LLM for "three studies proving X" and it may invent realistic-looking studies that don't exist.</div>
+  <p>This matters enormously for a future FDE: you'll build systems that <em>check</em> and <em>ground</em> AI answers in real data (you'll learn exactly how in Month 4). Never trust an LLM as a source of truth on its own.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Deliberately get an AI to be confidently wrong — ask for very specific obscure facts or recent events. Screenshot one good example. Now you've seen a hallucination in the wild.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>AI has limited short-term memory (context window) and will sometimes sound certain while being wrong (hallucinate). Always verify important answers.</div>
+  `,
+  quiz:[
+    {q:"A 'token' is roughly…",options:["One full sentence","About ¾ of a word","One letter","One paragraph"],answer:1,explain:"A token is a small chunk of text, about three-quarters of a word on average."},
+    {q:"A 'hallucination' is when the model…",options:["Crashes","Produces confident but false output","Runs out of memory","Refuses to answer"],answer:1,explain:"Because it predicts likely-sounding text, it can state false things convincingly."},
+    {q:"The context window is best described as the model's…",options:["Long-term memory of everything","Short-term memory for the current task","Internet connection","Hard drive"],answer:1,explain:"It's the limited amount of text the model can see at once — like short-term memory."}
+  ]
+});
+LESSONS.push({
+  id:"m1w3", group:"Month 1 — Understand AI", short:"W3 · Prompting Basics",
+  title:"Month 1 · Week 3 — Prompting Basics",
+  objective:"By the end you'll get far better answers just by asking better.",
+  body:`
+  <p>A <strong>prompt</strong> is whatever you type to the AI — your instruction or question. The single biggest lever on the quality of what you get out is the quality of what you put in. Good news: four simple techniques cover most of it.</p>
+  <h3>The four techniques that matter most</h3>
+  <ul>
+    <li><strong>Be specific</strong> — say the audience, length, and format you want.</li>
+    <li><strong>Give a role</strong> — "You are an experienced pediatric nurse…" puts the model in the right mode.</li>
+    <li><strong>Give an example</strong> — show one good answer and ask for more like it.</li>
+    <li><strong>Ask for steps</strong> — "think step by step" or "first outline, then write" improves reasoning.</li>
+  </ul>
+  <h3>Weak vs. strong</h3>
+  <p><strong>Weak:</strong> "Write about dogs."<br>
+  <strong>Strong:</strong> "Write a friendly 100-word paragraph for a pet-store website explaining why golden retrievers are good family dogs. Warm tone, end with a call to visit the store."</p>
+  <p>The strong prompt gives a role, length, audience, tone, and goal — so the output is dramatically better. Same model, totally different result.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An LLM is like a world-class freelancer who does <em>exactly</em> the brief you give. A vague brief gets vague work. A clear brief gets great work.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take a real task from Mihron AI — say, a follow-up email to a client. Write a lazy one-line prompt, then improve it three times (add audience, tone, length, a goal). Save the before-and-after; the difference will surprise you.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Be specific, give a role, give an example, ask for steps. That's 90% of prompting.</div>
+  `,
+  quiz:[
+    {q:"Which is the strongest prompt?",options:["'Write about dogs.'","'Tell me something.'","'Write a warm 100-word pet-store paragraph on why golden retrievers suit families, ending with a call to visit.'","'Dogs?'"],answer:2,explain:"It specifies audience, length, tone, and goal — so the output is far better."},
+    {q:"Which is NOT one of the four core techniques?",options:["Be specific","Give a role","Type in all caps","Ask for steps"],answer:2,explain:"Capitalization doesn't help. Specificity, roles, examples, and step-by-step do."}
+  ]
+});
+LESSONS.push({
+  id:"m1w4", group:"Month 1 — Understand AI", short:"W4 · Prompting Deeper + Ethics",
+  title:"Month 1 · Week 4 — Prompting Deeper + AI Ethics",
+  objective:"By the end you'll control AI output and understand responsible use.",
+  body:`
+  <p>Two ideas this week: steering the output, and using AI responsibly.</p>
+  <h3>System vs. user instructions</h3>
+  <p>Most AI apps have two layers of instruction. The <strong>system</strong> instruction sets the overall behavior ("You are a polite scheduling assistant for a dental clinic; never give medical advice"). The <strong>user</strong> instruction is each individual message. The system prompt is like a job description; user prompts are the day-to-day tasks.</p>
+  <h3>Controlling the output</h3>
+  <p>You can dictate <em>format</em> (give me a bulleted list / a table / valid JSON), <em>length</em> (in 50 words), and <em>tone</em> (friendly, formal, for a 10-year-old). Being explicit here saves you endless back-and-forth.</p>
+  <h3>Responsible use</h3>
+  <ul>
+    <li><strong>Privacy</strong> — don't paste customers' personal data into public AI tools without care; it may be stored.</li>
+    <li><strong>Bias</strong> — models learned from human text, so they can repeat human biases. Stay alert.</li>
+    <li><strong>Honesty</strong> — verify facts before you act on them; don't pass off AI output as guaranteed truth.</li>
+  </ul>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>The system prompt is the employee handbook; user prompts are the daily to-do list. Set the handbook well and every task goes smoother.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Build a small "prompt playbook" — five reusable prompts for tasks you do often at Mihron AI (e.g., draft a client reply, summarize a call, write a service description). Save them in a note. This is your first reusable asset.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>You can steer AI with system vs. user instructions and explicit format/length/tone — and you must use it responsibly with private data.</div>
+  `,
+  quiz:[
+    {q:"The 'system' instruction is best compared to…",options:["A single daily task","An employee handbook setting overall behavior","An internet search","A password"],answer:1,explain:"The system prompt sets the assistant's overall role and rules; user prompts are individual tasks."},
+    {q:"Which is a real privacy concern with public AI tools?",options:["They type too fast","Pasted personal customer data may be stored","They use too many tokens","They only speak English"],answer:1,explain:"Be careful pasting sensitive personal data into public tools — handle it responsibly."}
+  ]
+});
+
+/* ============ MONTH 2 ============ */
+LESSONS.push({
+  id:"m2w5", group:"Month 2 — Learn to Code", short:"W5 · Your First Code",
+  title:"Month 2 · Week 5 — Your First Lines of Code",
+  objective:"By the end you'll have run real code in your browser.",
+  body:`
+  <p>This month you learn to code — gently, in your browser, with nothing to install. Don't worry: you won't memorize anything. You'll learn to <em>read and tweak</em> code, which is the real skill.</p>
+  <h3>What is code? What is Python?</h3>
+  <p><strong>Code</strong> is a set of precise written instructions a computer follows exactly. <strong>Python</strong> is a programming language that reads almost like English — which is exactly why it's the standard language for AI.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Code is a recipe, and the computer is a very literal cook. If the recipe forgets "preheat the oven," the cook won't assume — it'll serve you raw cake. Computers do <em>exactly</em> what you write, nothing more.</div>
+  <h3>Your playground: Google Colab</h3>
+  <p>Go to <strong>colab.research.google.com</strong>, sign in with a Google account, and click "New notebook." A notebook is a page where you type code into a "cell" and press the ▶ play button to run it. Free, browser-based, nothing to install.</p>
+  <p>Type this into a cell and press play:</p>
+  <pre><code>print("Hello, I'm learning AI")   <span class="cmt"># print() shows text on the screen</span></code></pre>
+  <p>You'll see your words appear below the cell. That little <code>print()</code> is a built-in instruction that displays whatever you put inside its parentheses. The <span class="cmt"># text</span> is a <strong>comment</strong> — a note for humans that the computer ignores.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, run the line above. Then change the words inside the quotes and run it again. Add a second line: <code>print(2 + 2)</code> and watch it print 4. You just ran code.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Code is precise instructions for a literal computer. <code>print()</code> displays things, and <code>#</code> starts a comment.</div>
+  `,
+  quiz:[
+    {q:"What does print() do?",options:["Sends a document to a printer","Displays text/values on the screen","Saves a file","Deletes text"],answer:1,explain:"In Python, print() outputs whatever is inside the parentheses to the screen."},
+    {q:"What is the # symbol used for?",options:["A comment the computer ignores","A password","A math operation","An error"],answer:0,explain:"Anything after # on a line is a comment — a note for humans, ignored by the computer."}
+  ]
+});
+LESSONS.push({
+  id:"m2w6", group:"Month 2 — Learn to Code", short:"W6 · Variables & Data Types",
+  title:"Month 2 · Week 6 — Storing Information (Variables)",
+  objective:"By the end you'll store values and combine them with text.",
+  body:`
+  <p>Programs need to remember things — a name, a number, a yes/no. They do that with <strong>variables</strong>.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A variable is a labeled box. You put a value in the box and write a name on it. Later you say the name to get the value back.</div>
+  <pre><code>name = "Atul"          <span class="cmt"># a box named 'name' holding text</span>
+print("Hello, " + name)  <span class="cmt"># prints: Hello, Atul</span></code></pre>
+  <p>Line 1 stores the text "Atul" in a box called <code>name</code>. Line 2 glues "Hello, " and the contents of the box together with <code>+</code> and prints it.</p>
+  <h3>The three basic data types</h3>
+  <ul>
+    <li><strong>String</strong> — text, always in quotes: <code>"Atul"</code>, <code>"hello"</code>.</li>
+    <li><strong>Number</strong> — no quotes: <code>25</code>, <code>3.5</code>. You can do math with these.</li>
+    <li><strong>Boolean</strong> — true or false: <code>True</code>, <code>False</code>. Used for yes/no decisions.</li>
+  </ul>
+  <pre><code>age = 25            <span class="cmt"># a number</span>
+is_student = True   <span class="cmt"># a boolean (yes/no)</span>
+print(name, "is", age)   <span class="cmt"># prints: Atul is 25</span></code></pre>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, make three variables: your name (string), your age (number), and a sentence that combines them with print(). Example: <code>print(name + " is " + str(age))</code>. (We wrap the number in <code>str()</code> to turn it into text so it can be glued to other text.)</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Variables are named boxes that store values. The three basics: strings (text), numbers, and booleans (true/false).</div>
+  `,
+  quiz:[
+    {q:"Which is a string?",options:["25","True","\"hello\"","3.5"],answer:2,explain:"Text wrapped in quotes is a string. Numbers and True/False are not."},
+    {q:"What is a variable?",options:["A type of error","A named box that stores a value","A printer command","A website"],answer:1,explain:"A variable is a named container that holds a value you can use later."},
+    {q:"What does True / False represent?",options:["A string","A number","A boolean (yes/no)","A comment"],answer:2,explain:"True and False are booleans — used for yes/no decisions."}
+  ]
+});
+LESSONS.push({
+  id:"m2w7", group:"Month 2 — Learn to Code", short:"W7 · Decisions & Lists",
+  title:"Month 2 · Week 7 — Making Decisions & Lists",
+  objective:"By the end you'll make programs that choose, and store many values.",
+  body:`
+  <p>Programs get useful when they can make decisions. That's the job of <strong>if / else</strong>.</p>
+  <pre><code>number = 150
+if number > 100:        <span class="cmt"># is number greater than 100?</span>
+    print("big")        <span class="cmt"># runs only if the answer is yes</span>
+else:
+    print("small")      <span class="cmt"># runs otherwise</span></code></pre>
+  <p>The computer checks the condition after <code>if</code>. If it's true, it runs the indented line under it; if not, it runs the <code>else</code> line. Those comparison symbols: <code>></code> greater, <code>&lt;</code> less, <code>==</code> equal (two equals signs means "is equal to").</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>if/else is a fork in the road. The condition is the signpost: true goes left, false goes right.</div>
+  <h3>Lists — a row of values</h3>
+  <p>A <strong>list</strong> holds many values in order, inside square brackets:</p>
+  <pre><code>services = ["Voice agent", "SMS bot", "Booking flow"]
+print(services[0])   <span class="cmt"># prints the first item: Voice agent</span></code></pre>
+  <p>Notice counting starts at <strong>0</strong>, so <code>services[0]</code> is the first item. That trips up every beginner — it's normal.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a program: set a variable to a number, and print "big" if it's over 100, else "small". Then make a list of three Mihron AI services and print the second one.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>if/else lets a program choose; lists store many values in order, counted from 0.</div>
+  `,
+  quiz:[
+    {q:"In Python, '==' means…",options:["Assign a value","Is equal to (a comparison)","Add","A comment"],answer:1,explain:"Single = assigns; double == checks whether two things are equal."},
+    {q:"For services = [\"a\",\"b\",\"c\"], what is services[0]?",options:["c","b","a","an error"],answer:2,explain:"Lists are counted from 0, so [0] is the first item, 'a'."}
+  ]
+});
+LESSONS.push({
+  id:"m2w8", group:"Month 2 — Learn to Code", short:"W8 · Loops & Functions",
+  title:"Month 2 · Week 8 — Repeating & Reusing (Loops & Functions)",
+  objective:"By the end you'll write your own reusable function.",
+  body:`
+  <p>Two of the most powerful ideas in all of coding — and they're simpler than they sound.</p>
+  <h3>Loops — do something for each item</h3>
+  <pre><code>names = ["Sara", "Mike", "Ravi"]
+for n in names:            <span class="cmt"># go through the list, one at a time</span>
+    print("Hello " + n)    <span class="cmt"># runs once per name</span></code></pre>
+  <p>A <code>for</code> loop repeats the indented block once for every item in the list. Here it greets each name.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A loop is a stamp. Instead of writing "Hello" on 100 envelopes by hand, you stamp each one automatically.</div>
+  <h3>Functions — reusable mini-programs</h3>
+  <p>A <strong>function</strong> is a block of code you name once and reuse forever. You <em>define</em> it, then <em>call</em> it.</p>
+  <pre><code>def greet(name):           <span class="cmt"># define a function named greet</span>
+    return "Hello, " + name <span class="cmt"># it gives back a greeting</span>
+
+print(greet("Atul"))       <span class="cmt"># call it: prints Hello, Atul</span></code></pre>
+  <p>The word in parentheses (<code>name</code>) is the input you hand in. <code>return</code> is the answer it hands back. Define once, call as many times as you like.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a function <code>greet(name)</code> that returns a greeting, then use a for loop to greet a list of three names. You just combined both ideas — that's real programming.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Loops repeat work for each item; functions package work so you can reuse it by name.</div>
+  `,
+  quiz:[
+    {q:"What does a for loop do?",options:["Makes a decision","Repeats a block once per item","Stores a value","Connects to the internet"],answer:1,explain:"A for loop runs its indented block once for each item in a list."},
+    {q:"In def greet(name): … what is 'name'?",options:["The function's output","The input you hand to the function","A comment","A list"],answer:1,explain:"It's the input (parameter) you pass in when you call the function."},
+    {q:"'return' in a function…",options:["Prints to a printer","Hands back the function's result","Deletes the function","Starts a loop"],answer:1,explain:"return gives back the value the function produces, so the caller can use it."}
+  ]
+});
+
+/* ============ MONTH 3 ============ */
+LESSONS.push({
+  id:"m3w9", group:"Month 3 — Connect Code to AI", short:"W9 · What an API Is",
+  title:"Month 3 · Week 9 — What an API Is",
+  objective:"By the end you'll understand how programs talk to AI.",
+  body:`
+  <p>This month is the heart of the whole course: making a program talk to an AI model. The bridge that makes it possible is an <strong>API</strong>.</p>
+  <p>An <strong>API</strong> (Application Programming Interface) is a doorway that lets one program request something from another. When your code wants an answer from an AI model, it sends a request <em>through the model's API</em>.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An API is a restaurant. You (your program) are the customer. You give your order (your prompt) to the waiter (the API). The kitchen (the AI model) cooks it. The waiter brings back the dish (the answer). You never enter the kitchen — you just use the doorway.</div>
+  <h3>The API key</h3>
+  <p>To use an API you need an <strong>API key</strong> — a secret password that identifies you, so the provider knows who's asking and who to bill. Treat it exactly like a credit card number: never share it, never post it publicly, never put it in a screenshot.</p>
+  <h3>What "calling" an API means</h3>
+  <p>"Calling the API" just means your program sends a request and waits for the response. That's it. Almost every AI product you've ever used is, underneath, code making API calls to a model and doing something useful with the reply.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Create an account with an AI provider that offers an API (e.g., OpenAI or Anthropic), find the "API keys" section, and generate one key. Copy it somewhere safe and private — you'll use it next week. Do not share it with anyone.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An API is a doorway between programs (the restaurant waiter). An API key is your secret password — guard it like a credit card.</div>
+  `,
+  quiz:[
+    {q:"In the restaurant analogy, the AI model is the…",options:["Customer","Waiter (API)","Kitchen","Menu"],answer:2,explain:"You're the customer, the API is the waiter, and the model is the kitchen that does the work."},
+    {q:"How should you treat an API key?",options:["Share it so others can help","Post it publicly","Keep it secret like a credit card","Print it on your website"],answer:2,explain:"An API key is a secret password tied to billing — never expose it."}
+  ]
+});
+LESSONS.push({
+  id:"m3w10", group:"Month 3 — Connect Code to AI", short:"W10 · Your First API Call",
+  title:"Month 3 · Week 10 — Your First AI API Call",
+  objective:"By the end you'll get an AI reply from your own code.",
+  body:`
+  <p>Time for the big moment. Every API call follows four plain steps:</p>
+  <ol>
+    <li><strong>Package</strong> your message (your prompt).</li>
+    <li><strong>Send</strong> it to the model's API, along with your key.</li>
+    <li>The model <strong>processes</strong> it.</li>
+    <li>You <strong>get text back</strong> and use it.</li>
+  </ol>
+  <p>Here's a real, commented recipe. Study each line — you don't need to memorize it, just understand what each part does. (This uses the OpenAI-style library; the idea is identical across providers.)</p>
+  <pre><code><span class="cmt"># Step 0: install the library (run once in Colab)</span>
+<span class="cmt"># !pip install openai</span>
+
+from openai import OpenAI            <span class="cmt"># bring in the tool</span>
+
+client = OpenAI(api_key="YOUR_KEY")  <span class="cmt"># your secret key goes here</span>
+
+response = client.chat.completions.create(  <span class="cmt"># make the call</span>
+    model="gpt-4o-mini",                    <span class="cmt"># which model to use</span>
+    messages=[                              <span class="cmt"># your message to the model</span>
+        {"role": "user", "content": "Say hello to Atul in one sentence."}
+    ]
+)
+
+print(response.choices[0].message.content)  <span class="cmt"># print the reply</span></code></pre>
+  <p>That last line digs into the response to pull out just the text and prints it. When you run this, the AI's sentence appears below your cell — generated by a program <em>you</em> wrote.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>You wrote the order slip (messages), handed it to the waiter with your membership card (api_key), and read the dish description it brought back (the printed reply).</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, paste the recipe, replace YOUR_KEY with your real key, and run it. Then change the question and run again. Congratulations — you just built an AI program.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An API call = package → send (with key) → model processes → you get text back. This is THE core skill of AI engineering.</div>
+  `,
+  quiz:[
+    {q:"What are the four steps of an API call?",options:["Type, save, print, delete","Package, send (with key), model processes, get text back","Login, logout, retry, refresh","Chunk, embed, store, retrieve"],answer:1,explain:"Package your message, send with your key, the model processes, and you receive text back."},
+    {q:"In the recipe, what does the last print line do?",options:["Sends the message","Installs the library","Pulls out and shows the model's reply text","Deletes the key"],answer:2,explain:"It reaches into the response object to grab the reply text and prints it."}
+  ]
+});
+LESSONS.push({
+  id:"m3w11", group:"Month 3 — Connect Code to AI", short:"W11 · Working with Responses",
+  title:"Month 3 · Week 11 — Working With AI Responses",
+  objective:"By the end you'll feed multiple inputs to AI from code.",
+  body:`
+  <p>Now you'll do more than one call and handle the results cleanly. Three handy tools.</p>
+  <h3>Store the reply in a variable</h3>
+  <p>Instead of printing immediately, save the reply so you can reuse it:</p>
+  <pre><code>answer = response.choices[0].message.content
+print(answer)            <span class="cmt"># use 'answer' as many times as you like</span></code></pre>
+  <h3>f-strings — clean text with variables</h3>
+  <p>Put an <code>f</code> before a string and drop variables inside curly braces:</p>
+  <pre><code>name = "Atul"
+print(f"Hello {name}, here is your answer:")   <span class="cmt"># Hello Atul, here is your answer:</span></code></pre>
+  <h3>Loop over several questions</h3>
+  <pre><code>questions = ["What is RAG?", "What is an agent?", "What is a token?"]
+for q in questions:
+    r = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role":"user","content":q}]
+    )
+    print(f"Q: {q}")
+    print(r.choices[0].message.content)</code></pre>
+  <h3>Gentle error handling</h3>
+  <p>Sometimes a call fails (bad key, no internet). Wrap risky code in <code>try / except</code> so your program says "something went wrong" instead of crashing:</p>
+  <pre><code>try:
+    r = client.chat.completions.create(...)
+except:
+    print("Something went wrong — check your key or connection.")</code></pre>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>try/except is a safety net: attempt the trick, and if you fall, land softly instead of crashing to the floor.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Put three questions in a list and loop over them, printing each answer. You now have an AI program that handles many inputs at once.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Store replies in variables, format text with f-strings, loop to handle many inputs, and use try/except so failures don't crash you.</div>
+  `,
+  quiz:[
+    {q:"What does an f-string let you do?",options:["Encrypt text","Drop variables inside a string with {curly braces}","Loop forever","Make an API key"],answer:1,explain:"An f-string (f\"...\") inserts variables directly into text using {braces}."},
+    {q:"Why use try/except?",options:["To make code run faster","To handle failures gracefully instead of crashing","To hide your API key","To create a list"],answer:1,explain:"try/except catches errors so your program can respond calmly instead of crashing."}
+  ]
+});
+LESSONS.push({
+  id:"m3w12", group:"Month 3 — Connect Code to AI", short:"W12 · Mini-Project: AI Tool",
+  title:"Month 3 · Week 12 — Mini-Project: Your First AI Tool",
+  objective:"By the end you'll have built a working AI tool — your first portfolio piece.",
+  body:`
+  <p>Time to combine everything into something real. You'll build a tiny "assistant" and then a practical Mihron AI email drafter.</p>
+  <h3>Project A — a question→answer assistant</h3>
+  <p>The recipe, step by step:</p>
+  <ol>
+    <li>Set up the client with your key (Week 10).</li>
+    <li>Use <code>input()</code> to ask the user to type a question.</li>
+    <li>Send that question to the model.</li>
+    <li>Print the reply.</li>
+  </ol>
+  <pre><code>question = input("Ask me anything: ")     <span class="cmt"># user types a question</span>
+r = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role":"user","content":question}]
+)
+print(r.choices[0].message.content)</code></pre>
+  <h3>Project B — a Mihron AI email drafter</h3>
+  <p>Reuse the same pattern, but build a richer prompt with a role and details:</p>
+  <pre><code>client_name = input("Client name: ")
+topic = input("What's the email about? ")
+prompt = f"You are a friendly assistant for Mihron AI. Write a short, warm email to {client_name} about: {topic}. Keep it under 120 words."
+r = client.chat.completions.create(model="gpt-4o-mini",
+    messages=[{"role":"user","content":prompt}])
+print(r.choices[0].message.content)</code></pre>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>You're no longer just ordering one dish — you've opened a tiny kitchen of your own that takes custom orders and serves them.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Build Project A, run it, ask a few questions. Then build Project B and generate a real draft email for a Mihron AI client. Save the notebook — this is your first portfolio piece. 🎉</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>A real AI tool is just: get input → build a good prompt → call the model → use the reply. You can now do all four.</div>
+  `,
+  quiz:[
+    {q:"What does input() do?",options:["Sends an API call","Lets the user type something in","Prints a list","Creates a function"],answer:1,explain:"input() pauses and lets the user type a value your program can use."},
+    {q:"What makes Project B's email better than a lazy prompt?",options:["It uses a role and specific details","It uses more tokens","It avoids variables","It skips the model"],answer:0,explain:"Giving the model a role ('assistant for Mihron AI') plus specifics produces a far better draft."}
+  ]
+});
+
+/* ============ MONTH 4 ============ */
+LESSONS.push({
+  id:"m4w13", group:"Month 4 — Give AI Knowledge", short:"W13 · The Knowledge Problem",
+  title:"Month 4 · Week 13 — The Knowledge Problem & Embeddings",
+  objective:"By the end you'll understand how AI represents meaning as numbers.",
+  body:`
+  <p>An LLM only knows what it learned during training. It doesn't know your company's private documents, your current prices, or anything recent. So how do real products make AI answer questions about <em>your</em> stuff? The answer starts with <strong>embeddings</strong>.</p>
+  <h3>What's an embedding?</h3>
+  <p>An <strong>embedding</strong> turns a piece of text into a list of numbers that captures its <em>meaning</em>. Sentences that mean similar things get similar numbers; unrelated sentences get very different numbers.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Think of a giant map where every sentence is a pin. Sentences about "after-hours phone support" land close together; a sentence about "pizza recipes" lands far away. The embedding is the pin's coordinates.</div>
+  <p>Why does this matter? Because once meaning is numbers, a computer can <em>measure</em> how close two pieces of text are in meaning — even if they share no words. "Do you work late?" and "Are you open after 6pm?" use different words but mean almost the same thing, so their embeddings sit close together.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write down three sentences that mean roughly the same thing in different words, and one that's totally unrelated. Imagine them as pins on a map: which three cluster together, and which one sits far away? That clustering is what embeddings capture.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An embedding is meaning turned into numbers. Similar meaning → similar numbers → measurable closeness.</div>
+  `,
+  quiz:[
+    {q:"An embedding turns text into…",options:["A picture","Numbers that capture meaning","An API key","A printed page"],answer:1,explain:"Embeddings represent the meaning of text as a list of numbers."},
+    {q:"Two sentences that mean the same thing but use different words will have…",options:["Very different embeddings","Similar embeddings (close together)","No embeddings","Identical text"],answer:1,explain:"Embeddings capture meaning, so similar meanings land close together even with different words."}
+  ]
+});
+LESSONS.push({
+  id:"m4w14", group:"Month 4 — Give AI Knowledge", short:"W14 · Vector Databases",
+  title:"Month 4 · Week 14 — Searching by Meaning (Vector Databases)",
+  objective:"By the end you'll understand search by meaning, not keywords.",
+  body:`
+  <p>Once your text is embeddings (numbers), you need somewhere to store them and a way to search them. That's a <strong>vector database</strong>.</p>
+  <p>A vector database is a search engine for <em>meaning</em>. You give it a question (as an embedding), and it instantly finds the stored pieces of text whose meaning is closest. This is called <strong>similarity search</strong>.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A normal search (like Ctrl+F) finds exact words. A vector database finds <em>ideas</em>. Ask "Do you work late?" and it finds your paragraph that says "We're available until 9pm" — even though not a single word matches.</div>
+  <h3>A simple example</h3>
+  <p>Imagine you stored these three sentences as embeddings:</p>
+  <ul>
+    <li>"We answer calls 24/7."</li>
+    <li>"Our pricing starts at $99/month."</li>
+    <li>"We support English and Spanish."</li>
+  </ul>
+  <p>A customer asks: "Can I reach you in the middle of the night?" The vector database compares the question's embedding to all three and returns the first one — closest in meaning — even though the words are completely different.</p>
+  <p>Popular vector databases you'll hear about: Pinecone, Chroma, Weaviate, FAISS. You don't need them yet — just understand what they do.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take the three example sentences above. For each of these questions, pick which sentence a meaning-search would return: (1) "How much does it cost?" (2) "Do you speak Spanish?" (3) "Are you open at 3am?"</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>A vector database stores embeddings and finds the closest ones by meaning — that's similarity search.</div>
+  `,
+  quiz:[
+    {q:"A vector database searches by…",options:["Exact keyword match","Meaning (similarity)","File name","Date"],answer:1,explain:"It compares embeddings to find text closest in meaning, not exact words."},
+    {q:"Ask 'Can I reach you at night?' — which stored line is returned?",options:["'Our pricing starts at $99/month.'","'We answer calls 24/7.'","'We support English and Spanish.'","None"],answer:1,explain:"The 24/7 line is closest in meaning, even though no words match."}
+  ]
+});
+LESSONS.push({
+  id:"m4w15", group:"Month 4 — Give AI Knowledge", short:"W15 · The Full RAG Pipeline",
+  title:"Month 4 · Week 15 — The Full RAG Pipeline",
+  objective:"By the end you'll be able to describe RAG end-to-end.",
+  body:`
+  <p>Now we connect the pieces. <strong>RAG</strong> stands for <strong>Retrieval-Augmented Generation</strong>. It means: before the model answers, your system finds the relevant pages from your own documents and hands them to the model along with the question.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A closed-book exam vs. an open-book exam. Without RAG, the AI answers from memory and may misremember. With RAG, you let it flip to the exact right page first — so its answer is grounded in your real material.</div>
+  <h3>The five steps (the vocabulary you'll keep hearing)</h3>
+  <ol>
+    <li><strong>Chunk</strong> — break your documents into small pieces (paragraphs).</li>
+    <li><strong>Embed</strong> — turn each chunk into meaning-numbers.</li>
+    <li><strong>Store</strong> — save those in a vector database.</li>
+    <li><strong>Retrieve</strong> — when a question arrives, find the chunks closest in meaning.</li>
+    <li><strong>Generate</strong> — hand those chunks + the question to the LLM, which writes the final answer.</li>
+  </ol>
+  <h3>Trace it on a real example</h3>
+  <p>Your Mihron AI service doc is chunked, embedded, and stored. A customer asks your website bot, "Do you offer after-hours voice agents?" RAG <em>retrieves</em> the paragraph that mentions after-hours coverage, hands it to the model, and the bot answers accurately from <em>your</em> real offering — instead of guessing or hallucinating.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take a real Mihron AI document in your head and walk it through all five steps out loud: chunk → embed → store → retrieve → generate. If you can narrate it without notes, you've got RAG.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>RAG = chunk → embed → store → retrieve → generate. It grounds AI answers in your own documents (the open-book exam).</div>
+  `,
+  quiz:[
+    {q:"What does RAG stand for?",options:["Rapid AI Generation","Retrieval-Augmented Generation","Remote Access Gateway","Random Answer Generator"],answer:1,explain:"Retrieval-Augmented Generation — retrieve relevant text, then generate a grounded answer."},
+    {q:"Which is the correct RAG order?",options:["Generate → store → chunk → embed → retrieve","Chunk → embed → store → retrieve → generate","Embed → generate → chunk → store → retrieve","Retrieve → chunk → generate → embed → store"],answer:1,explain:"Chunk, embed, store, then at question time: retrieve and generate."},
+    {q:"RAG mainly solves which problem?",options:["Slow internet","The model not knowing your private/recent data","Weak passwords","Too many tokens"],answer:1,explain:"RAG feeds the model your own documents so it can answer about data it never trained on."}
+  ]
+});
+LESSONS.push({
+  id:"m4w16", group:"Month 4 — Give AI Knowledge", short:"W16 · Mini-Project: Doc Q&A",
+  title:"Month 4 · Week 16 — Mini-Project: A Document Q&A Bot",
+  objective:"By the end you'll have a 'baby RAG' that answers from your own doc.",
+  body:`
+  <p>You'll build the simplest possible RAG — no vector database needed yet. The trick: paste a short document right into the prompt, so the model answers <em>from it</em>. This teaches the core idea before you add the fancy parts.</p>
+  <h3>The recipe</h3>
+  <pre><code>document = """
+Mihron AI offers AI voice agents that answer calls 24/7,
+book appointments, and capture leads after hours.
+Pricing starts at $99/month. We support English and Spanish.
+"""
+
+question = input("Ask about Mihron AI: ")
+
+prompt = f"""Answer the question using ONLY the document below.
+If the answer isn't in it, say 'I don't know from this document.'
+
+DOCUMENT:
+{document}
+
+QUESTION: {question}"""
+
+r = client.chat.completions.create(model="gpt-4o-mini",
+    messages=[{"role":"user","content":prompt}])
+print(r.choices[0].message.content)</code></pre>
+  <p>Two things make this a baby RAG: you <strong>gave the model the source text</strong> (the document) and you <strong>told it to answer only from that text</strong>. That dramatically cuts hallucinations.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>You handed the student the open textbook page and said "answer only from this page." No more making things up.</div>
+  <h3>How this grows into real RAG</h3>
+  <p>When your documents are too big to paste, you swap the "paste the whole doc" step for the full pipeline from last week: chunk, embed, store, and retrieve only the most relevant chunk to paste in. Same idea, just scalable.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Paste a real Mihron AI FAQ into the document variable, run it, and ask 3 questions — including one the doc can't answer (check that it says "I don't know"). Save it — portfolio piece #2. 🎉</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Give the model the source text and tell it to answer only from that text — that's RAG in miniature, and it crushes hallucinations.</div>
+  `,
+  quiz:[
+    {q:"Why does pasting the document into the prompt reduce hallucinations?",options:["It uses fewer tokens","The model answers from the provided text instead of guessing","It makes the model faster","It hides the API key"],answer:1,explain:"Grounding the answer in supplied text stops the model from inventing things."},
+    {q:"When documents get too big to paste, you instead…",options:["Give up","Use the full pipeline to retrieve only the most relevant chunks","Make the prompt shorter randomly","Email them"],answer:1,explain:"You chunk/embed/store and retrieve just the relevant pieces — scalable RAG."}
+  ]
+});
+
+/* ============ MONTH 5 ============ */
+LESSONS.push({
+  id:"m5w17", group:"Month 5 — AI That Acts", short:"W17 · Tool Calling",
+  title:"Month 5 · Week 17 — Tool Calling",
+  objective:"By the end you'll understand how a model uses your functions.",
+  body:`
+  <p>So far the AI just talks. This month it learns to <em>act</em>. The first building block is <strong>tool calling</strong>.</p>
+  <p>You give the model a list of "tools" — really, functions in your code, like <code>get_time</code> or <code>book_appointment</code>. The model decides which tool to use and with what inputs. <em>Your code</em> runs the tool and gives the result back. The model uses that result to continue.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>The model is a smart manager who can't do everything personally. You give it a team of specialists (your functions). It says "Specialist, get me the current time," the specialist does it and reports back, and the manager carries on with that info.</div>
+  <h3>A simple trace</h3>
+  <p>You offer a tool called <code>get_time()</code>. The conversation goes:</p>
+  <ol>
+    <li>User: "What time is it?"</li>
+    <li>Model: "I should call get_time" → returns a structured request.</li>
+    <li>Your code runs get_time() → gets "3:42 PM" → hands it back.</li>
+    <li>Model: "It's 3:42 PM." (now using the real result)</li>
+  </ol>
+  <p>The crucial insight: the model doesn't actually run anything itself. It <em>decides</em>; your code <em>does</em>. That separation is what makes tools safe and powerful.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>On paper, design one tool you'd give an AI for Mihron AI (e.g., <code>check_availability(date)</code>). Write what it takes in and what it gives back. That's the whole skill — defining clear tools.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Tool calling = the model decides which of your functions to run; your code runs it and returns the result. The model decides, your code acts.</div>
+  `,
+  quiz:[
+    {q:"In tool calling, who actually runs the tool?",options:["The model itself","Your code","The user","The internet"],answer:1,explain:"The model decides which tool and inputs; your code executes it and returns the result."},
+    {q:"A 'tool' is essentially…",options:["A function in your code the model can choose to use","A type of token","A vector database","An API key"],answer:0,explain:"Tools are functions you expose so the model can request actions."}
+  ]
+});
+LESSONS.push({
+  id:"m5w18", group:"Month 5 — AI That Acts", short:"W18 · The Agent Loop",
+  title:"Month 5 · Week 18 — The Agent Loop",
+  objective:"By the end you'll explain the difference between a chatbot and an agent.",
+  body:`
+  <p>Put tool calling in a <em>loop</em> and you get an <strong>agent</strong> — an AI that keeps thinking and acting until a task is done.</p>
+  <h3>The loop</h3>
+  <p>An agent repeats four steps: <strong>think → act → observe → repeat</strong>.</p>
+  <ul>
+    <li><strong>Think</strong> — what's the next step toward the goal?</li>
+    <li><strong>Act</strong> — call a tool.</li>
+    <li><strong>Observe</strong> — look at the result.</li>
+    <li><strong>Repeat</strong> — keep going until the goal is reached, then reply.</li>
+  </ul>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A chatbot is a knowledgeable person on the phone who can only <em>talk</em>. An agent is an assistant with <em>hands and a to-do list</em>: it can open the calendar, send the email, check the result, and keep going until the job's done.</div>
+  <h3>Chatbot vs. agent</h3>
+  <p>Ask a chatbot to "book me a haircut Friday" and it'll say "Sure, here's how you could do that." Ask an agent and it will actually check the calendar, reserve the slot, send a confirmation, and tell you it's done. The difference is <em>action</em>.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write out the think→act→observe steps an agent would take to answer "Am I free Friday at 2, and if so book a call with Sara?" List each tool it would call in order.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An agent is an LLM in a loop (think → act → observe → repeat) that takes actions. A chatbot only talks; an agent does.</div>
+  `,
+  quiz:[
+    {q:"The agent loop is…",options:["Read → write → delete","Think → act → observe → repeat","Chunk → embed → store","Login → logout"],answer:1,explain:"An agent thinks, acts (uses a tool), observes the result, and repeats until done."},
+    {q:"The key difference between a chatbot and an agent is…",options:["Speed","The agent takes actions, not just talks","Color","Price"],answer:1,explain:"A chatbot only produces text; an agent can use tools to actually do things."}
+  ]
+});
+LESSONS.push({
+  id:"m5w19", group:"Month 5 — AI That Acts", short:"W19 · Build a Simple Agent",
+  title:"Month 5 · Week 19 — Build a Simple Agent",
+  objective:"By the end you'll understand the architecture behind voice agents.",
+  body:`
+  <p>Let's design a small agent that mirrors exactly what Mihron AI's voice agents do: booking an appointment over the phone.</p>
+  <h3>The three tools</h3>
+  <ul>
+    <li><code>check_availability(date, time)</code> → returns whether a slot is open.</li>
+    <li><code>book_appointment(name, date, time)</code> → reserves the slot.</li>
+    <li><code>send_confirmation(name, phone)</code> → texts the caller.</li>
+  </ul>
+  <h3>The agent in action</h3>
+  <p>A caller says, "Book me for Friday at 2." The agent's loop:</p>
+  <ol>
+    <li><strong>Think:</strong> I need to check if Friday 2pm is open. <strong>Act:</strong> call check_availability → <strong>Observe:</strong> it's open.</li>
+    <li><strong>Think:</strong> Now reserve it. <strong>Act:</strong> call book_appointment → <strong>Observe:</strong> booked.</li>
+    <li><strong>Think:</strong> Confirm with the caller. <strong>Act:</strong> call send_confirmation → <strong>Observe:</strong> text sent.</li>
+    <li><strong>Reply:</strong> "You're booked for Friday at 2 — confirmation texted."</li>
+  </ol>
+  <p>The model is the <em>brain</em> deciding when to use each tool. Each tool is a small piece of code you wrote. This exact pattern — a model orchestrating a few tools in a loop — is the architecture behind modern voice agents.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>The model is a receptionist with a phone, a calendar, and a text-message pad. It uses each at the right moment to get the caller booked.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Sketch a second agent for Mihron AI — maybe a "missed-call follow-up" agent. What 2–3 tools would it need, and in what order would it use them?</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An agent = a model brain + a few well-defined tools, used in a loop. That's exactly how voice agents work under the hood.</div>
+  `,
+  quiz:[
+    {q:"In the booking agent, the model's job is to…",options:["Run the tools itself","Decide which tool to use and when","Store data","Replace the customer"],answer:1,explain:"The model orchestrates: it decides which tool to call at each step; your code runs them."},
+    {q:"Modern voice agents are basically…",options:["A single giant prompt","A model brain orchestrating a few tools in a loop","A vector database","A spreadsheet"],answer:1,explain:"They're agents: an LLM deciding when to call tools like availability, booking, and confirmation."}
+  ]
+});
+LESSONS.push({
+  id:"m5w20", group:"Month 5 — AI That Acts", short:"W20 · Automations & Services",
+  title:"Month 5 · Week 20 — Automations & Connecting Services",
+  objective:"By the end you'll know how to connect services to act automatically.",
+  body:`
+  <p>Agents are one way to make things happen automatically. There's also a whole world of <strong>automation</strong> — connecting apps so an event in one triggers an action in another.</p>
+  <h3>Webhooks — the trigger</h3>
+  <p>A <strong>webhook</strong> is a way for one service to instantly notify another that something happened. "A form was submitted" → a webhook fires → another service springs into action. Think of it as a doorbell: when pressed, it rings somewhere else.</p>
+  <h3>No-code automation tools</h3>
+  <p>Tools like <strong>Zapier</strong> and <strong>Make</strong> let you wire services together with no code: "When a new lead fills the website form, send them a text and add them to a spreadsheet." You build it by clicking, not typing.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Automation is a row of dominoes. You tip the first one (a form submission) and the rest fall on their own (text sent, sheet updated, team notified).</div>
+  <h3>Code vs. no-code — when to use which</h3>
+  <ul>
+    <li><strong>No-code (Zapier/Make):</strong> fast, great for simple "when X, do Y" flows and connecting popular apps.</li>
+    <li><strong>Code:</strong> needed when logic gets complex, custom, or high-volume — and it's what an FDE often reaches for.</li>
+  </ul>
+  <p>A great FDE knows both, and picks the simplest tool that solves the customer's problem.</p>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free Zapier account and build one tiny automation: e.g., "When I star an email, add a row to a Google Sheet." Watch a domino fall by itself. (This is automation #1 — portfolio-worthy.)</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Webhooks trigger actions across services; no-code tools wire them up fast. Use the simplest tool that solves the problem.</div>
+  `,
+  quiz:[
+    {q:"A webhook is best described as…",options:["A type of AI model","A doorbell that notifies another service when something happens","A vector database","A spreadsheet formula"],answer:1,explain:"A webhook instantly signals another service that an event occurred."},
+    {q:"When is no-code (Zapier/Make) a good choice?",options:["For simple 'when X, do Y' flows between popular apps","Never","Only for huge complex systems","Only for AI training"],answer:0,explain:"No-code shines for simple, fast automations connecting common apps."}
+  ]
+});
+
+/* ============ MONTH 6 ============ */
+LESSONS.push({
+  id:"m6w21", group:"Month 6 — Ship It & Become an FDE", short:"W21 · How Apps Reach Users",
+  title:"Month 6 · Week 21 — How Apps Reach Real Users",
+  objective:"By the end you'll understand servers, the cloud, and Git.",
+  body:`
+  <p>Your code so far runs in Colab on your screen. Real products run somewhere reliable, 24/7, for many people. Let's see how.</p>
+  <h3>Servers and the cloud</h3>
+  <p>A <strong>server</strong> is just a computer that's always on, waiting to handle requests. The <strong>cloud</strong> (AWS, Google Cloud, Azure) means renting those always-on computers from Amazon, Google, or Microsoft instead of buying your own.</p>
+  <h3>Databases</h3>
+  <p>A <strong>database</strong> is where an app stores information that must persist — customers, bookings, conversation history. Think of it as the app's long-term memory (versus the model's short-term context window).</p>
+  <h3>Git and GitHub</h3>
+  <p><strong>Git</strong> is a system that tracks changes to your code (like a super-powered undo history). <strong>GitHub</strong> is a website where you store and share that code. Every engineer uses it daily, and it's where your portfolio will live.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Git is the "track changes + version history" of code. GitHub is Google Drive for code — a shared home where your projects live and others can see them.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free GitHub account. Create a new repository, and upload one of your Colab notebooks (download it as .ipynb, then drag it into GitHub). Your code now lives somewhere other than your laptop — and you can link to it.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>The cloud = always-on rented computers; databases = an app's long-term memory; Git/GitHub = version history + a shared home for your code.</div>
+  `,
+  quiz:[
+    {q:"The 'cloud' basically means…",options:["Weather data","Always-on computers you rent from Amazon/Google/Microsoft","A type of AI model","Your laptop"],answer:1,explain:"Cloud platforms rent you always-on servers so your app runs 24/7."},
+    {q:"GitHub is…",options:["A vector database","A website to store and share code","An AI model","A spreadsheet"],answer:1,explain:"GitHub hosts your code (using Git) and is where your portfolio will live."}
+  ]
+});
+LESSONS.push({
+  id:"m6w22", group:"Month 6 — Ship It & Become an FDE", short:"W22 · Packaging & Deployment",
+  title:"Month 6 · Week 22 — Packaging & Deployment Concepts",
+  objective:"By the end you'll understand what 'deploying' really means.",
+  body:`
+  <p><strong>Deploying</strong> means putting your app somewhere it runs reliably for real users, around the clock — not just on your laptop. A few key ideas.</p>
+  <h3>Docker — the shipping container</h3>
+  <p><strong>Docker</strong> packages your app with everything it needs so it runs the same everywhere — your laptop, a teammate's machine, or a cloud server.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Before shipping containers, cargo was loaded loose and chaos followed. Containers standardized everything — any container fits any ship or truck. Docker does that for software.</div>
+  <h3>Secrets & environment variables</h3>
+  <p>Remember your API key must stay secret. In real apps you never paste it into the code. You store it as an <strong>environment variable</strong> (a secret setting kept outside the code) so it never ends up on GitHub for the world to see.</p>
+  <h3>Security & privacy</h3>
+  <p>Deployed apps handle real customer data, so you must encrypt sensitive data, protect keys, and follow privacy rules. For an FDE working inside a customer's systems, this is non-negotiable.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Building a feature on your laptop is cooking a great dish at home. <em>Deploying</em> it is opening a restaurant — now it must work consistently, safely, for many people, every day.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Open one of your scripts and list every secret in it (API keys, passwords). For each, note: "this must become an environment variable, never committed to GitHub." That habit will save you real trouble.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Deploying = running reliably for real users. Docker standardizes the package; secrets stay in environment variables; security & privacy are non-negotiable.</div>
+  `,
+  quiz:[
+    {q:"Docker is like…",options:["A shipping container that makes apps run the same everywhere","A vector database","An AI model","A web browser"],answer:0,explain:"Docker packages an app so it runs identically across machines."},
+    {q:"Where should an API key live in a real deployed app?",options:["Pasted directly in the code on GitHub","In an environment variable, kept secret","In a public README","In a screenshot"],answer:1,explain:"Secrets go in environment variables, never committed to your code repository."}
+  ]
+});
+LESSONS.push({
+  id:"m6w23", group:"Month 6 — Ship It & Become an FDE", short:"W23 · The FDE Craft",
+  title:"Month 6 · Week 23 — The FDE Craft (Human Skills)",
+  objective:"By the end you'll turn vague business problems into buildable plans.",
+  body:`
+  <p>Here's the secret most people miss: an FDE's technical skill gets them in the door, but their <em>human</em> skills get them hired and keep them valuable. The code is often only 30% of the value.</p>
+  <h3>The four human skills</h3>
+  <ul>
+    <li><strong>Translation</strong> — turning a vague complaint ("we lose leads after hours") into a concrete plan ("an after-hours voice agent that captures the lead and books a callback"). This is the #1 FDE skill.</li>
+    <li><strong>Customer empathy</strong> — explaining a technical system to a non-technical executive, and understanding their real constraints (budget, old systems, regulations).</li>
+    <li><strong>Radical ownership</strong> — when it breaks at 2am, you fix it. You don't pass the buck.</li>
+    <li><strong>T-shaped skills</strong> — deep in one area, broadly capable across many. You don't need to know everything; you need to connect the dots and learn fast.</li>
+  </ul>
+  <h3>A tale of two engineers</h3>
+  <p>Two engineers build the same chatbot. The FDE is the one who first sat with the customer, learned that 60% of missed revenue came from after-hours calls, scoped the <em>smallest</em> thing that would fix it, built it into their existing phone system, and was there when it went live. Same code — completely different value.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An FDE is a translator and a doctor in one: they listen to the symptoms in plain language, diagnose the real problem, and prescribe the smallest effective treatment.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a one-page "discovery note" for a real business (Mihron AI is perfect): What's their biggest problem? What could AI do about it? What would you need to build it? What could go wrong? This is exactly how FDE engagements start.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An FDE's superpower is translation — turning "we waste hours on X" into a concrete, smallest-useful thing you can build. The code is only part of the job.</div>
+  `,
+  quiz:[
+    {q:"The single most important FDE skill is…",options:["Typing speed","Translating business problems into buildable plans","Memorizing Python","Designing logos"],answer:1,explain:"Translation — turning vague business needs into concrete, scoped solutions — defines the role."},
+    {q:"'Radical ownership' means…",options:["You own the company","When it breaks, you fix it instead of passing the buck","You write the most code","You never make mistakes"],answer:1,explain:"FDEs take responsibility end-to-end, including fixing things when they break."}
+  ]
+});
+LESSONS.push({
+  id:"m6w24", group:"Month 6 — Ship It & Become an FDE", short:"W24 · Capstone, Part 1",
+  title:"Month 6 · Week 24 — Capstone, Part 1",
+  objective:"By the end your capstone will be scoped and underway.",
+  body:`
+  <p>Time to build something real that ties the whole course together. The goal isn't impressive — it's <em>finished and working</em>. A small thing that runs beats a grand thing that doesn't.</p>
+  <h3>A great capstone for you</h3>
+  <p>An <strong>after-hours FAQ + lead-capture assistant</strong> for Mihron AI: a customer types a question, the assistant answers from your service doc (RAG from Month 4), and if it's a sales lead, it captures the person's name and "books a callback" (a tool, from Month 5).</p>
+  <h3>Design checklist (do this before coding)</h3>
+  <ol>
+    <li><strong>Problem:</strong> one sentence — what does it solve?</li>
+    <li><strong>User:</strong> who uses it and how?</li>
+    <li><strong>Pieces:</strong> which course skills does it use? (prompt + RAG + a tool)</li>
+    <li><strong>Smallest version:</strong> what's the tiniest version that's still useful? Build that first.</li>
+    <li><strong>What could go wrong:</strong> hallucinations? missing info? Plan a fallback ("I don't know — let me connect you to a human").</li>
+  </ol>
+  <p>Then start building the smallest version in Colab, reusing your Week 16 baby-RAG as the foundation. Add one tool that "captures a lead" (for now, it can just print/save the name and question).</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Build the skateboard before the car. A working skateboard you can ride beats a beautiful car with no engine. Ship the smallest useful version first, then improve.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Fill in the 5-point design checklist for your capstone, then build the smallest working version: answer questions from a doc + capture a lead's name. Don't polish yet — just get it running end-to-end.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Scope small, design first, then build the smallest version that actually works end-to-end. Finished beats fancy.</div>
+  `,
+  quiz:[
+    {q:"What's the best capstone strategy?",options:["Build the biggest, most impressive thing possible","Build the smallest version that actually works, then improve","Skip the planning","Never test it"],answer:1,explain:"Ship the smallest useful, working version first — the skateboard, not the unfinished car."},
+    {q:"Before coding the capstone you should first…",options:["Buy a server","Fill in a short design checklist (problem, user, pieces, smallest version, risks)","Quit your job","Memorize all of Python"],answer:1,explain:"A quick design checklist keeps the project focused and finishable."}
+  ]
+});
+LESSONS.push({
+  id:"m6w25", group:"Month 6 — Ship It & Become an FDE", short:"W25 · Capstone, Part 2",
+  title:"Month 6 · Week 25 — Capstone, Part 2 + Write-Up",
+  objective:"By the end you'll have a finished project you can show people.",
+  body:`
+  <p>Last week you got it running. This week you finish, polish, and—crucially—<em>explain</em> it. Being able to describe your work clearly is half of what gets an FDE hired.</p>
+  <h3>Polish (lightly)</h3>
+  <ul>
+    <li>Test it with 5 real questions, including ones it should refuse.</li>
+    <li>Make sure the fallback works ("I don't know from this — connecting you to a human").</li>
+    <li>Tidy the prompt and remove anything confusing.</li>
+  </ul>
+  <h3>Write a README</h3>
+  <p>A <strong>README</strong> is a short document explaining your project. Include:</p>
+  <ol>
+    <li><strong>What it does</strong> — one or two sentences.</li>
+    <li><strong>Why it's useful</strong> — the business problem it solves.</li>
+    <li><strong>How it works</strong> — "uses RAG to answer from a service doc, plus a lead-capture tool."</li>
+    <li><strong>What you learned</strong> — honest reflection.</li>
+  </ol>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A README is the label on the jar. The project is the jam; the label tells people what's inside, why they'd want it, and what it's made of.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Finish your capstone, then write its README (4 sections above). Put both on GitHub. You now have a real, explainable portfolio project — milestone #6 unlocked. 🎉</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Finish, test the fallback, and write a clear README. Being able to <em>explain</em> your project is as valuable as building it.</div>
+  `,
+  quiz:[
+    {q:"A README's main purpose is to…",options:["Hide how the project works","Clearly explain what the project does, why, and how","Store your API key","Replace the code"],answer:1,explain:"A README explains the project so others (and employers) understand it."},
+    {q:"Why test the 'I don't know' fallback?",options:["To use more tokens","To make sure the bot refuses gracefully instead of hallucinating","To slow it down","It's not important"],answer:1,explain:"A good fallback prevents confident wrong answers — a hallmark of solid AI engineering."}
+  ]
+});
+LESSONS.push({
+  id:"m6w26", group:"Month 6 — Ship It & Become an FDE", short:"W26 · Portfolio & Launch",
+  title:"Month 6 · Week 26 — Portfolio & Launch",
+  objective:"By the end you'll have a portfolio and a clear path to the role.",
+  body:`
+  <p>Final week. You'll package what you've made and aim your next steps at the actual job.</p>
+  <h3>Your portfolio</h3>
+  <p>Put your three projects on GitHub — the AI tool (W12), the doc Q&A bot (W16), and the capstone (W24–25) — each with a clear README. A portfolio of small, working, explained projects is far more convincing than a certificate.</p>
+  <h3>Present yourself for FDE roles</h3>
+  <ul>
+    <li><strong>LinkedIn/resume:</strong> highlight that you build AI solutions end-to-end, understand RAG and agents, and have shipped real projects. Lead with outcomes, not buzzwords.</li>
+    <li><strong>Your story:</strong> you run an AI business (Mihron AI) and taught yourself to build — that's a genuinely strong FDE narrative. Use it.</li>
+  </ul>
+  <h3>Interview basics</h3>
+  <p>FDE interviews probe three things: can you build (a coding/AI exercise), can you think about a customer's problem (a scenario), and can you communicate (explaining clearly). Your capstone + discovery note are perfect practice for the last two.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Your portfolio is your highlight reel. Employers don't want to hear you <em>could</em> play — they want to see you score. Small working projects are your goals on tape.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Do three things this week: (1) put all projects on GitHub with READMEs, (2) update your LinkedIn headline toward "AI builder / aspiring Forward Deployed Engineer," (3) write your own next-6-months plan (see the Finish Line lesson for the exact next 3 topics).</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>A portfolio of small, working, explained projects + your real Mihron AI story is your strongest path into an FDE role.</div>
+  `,
+  quiz:[
+    {q:"What's more convincing to an FDE employer?",options:["A certificate alone","A portfolio of small, working, explained projects","A long list of buzzwords","A perfect grade"],answer:1,explain:"Demonstrated, explainable projects beat certificates and buzzwords."},
+    {q:"FDE interviews typically test…",options:["Only memorized trivia","Building, customer thinking, and communication","Typing speed only","Nothing technical"],answer:1,explain:"They probe whether you can build, understand the customer's problem, and communicate clearly."}
+  ]
+});
+
+// __INSERT_LESSONS__
+
+/* ============ FINISH ============ */
+LESSONS.push({
+  id:"finish", group:"Finish", short:"🏁 Finish Line",
+  title:"🏁 Finish Line — You Did It",
+  objective:"Six months of foundations, complete.",
+  body:`
+  <div class="finish">
+  <p class="big">🎉 Congratulations.</p>
+  <p>Six months ago you'd never written a line of code or knew what an LLM was. Look what you built along the way:</p>
+  <div class="mile"><div class="n">1</div><div><strong>A prompt playbook</strong> — you can get great results from any AI tool.</div></div>
+  <div class="mile"><div class="n">2</div><div><strong>Your first function</strong> — you can read and write basic Python.</div></div>
+  <div class="mile"><div class="n">3</div><div><strong>Your first AI tool</strong> — a program that talks to an AI model.</div></div>
+  <div class="mile"><div class="n">4</div><div><strong>A document Q&A bot</strong> — AI that answers from your own files (RAG).</div></div>
+  <div class="mile"><div class="n">5</div><div><strong>A small automation / agent</strong> — AI that takes actions.</div></div>
+  <div class="mile"><div class="n">6</div><div><strong>A capstone + portfolio</strong> — a real project you can show employers.</div></div>
+  <p style="margin-top:22px"><button class="btn primary" onclick="showCertificate()">🎓 Get your certificate of completion</button></p>
+  <h3>Your exact next 3 things to study</h3>
+  <ol>
+    <li><strong>Stronger Python</strong> — files, error handling, classes, and writing tidy, reusable code.</li>
+    <li><strong>A real framework</strong> — LangChain / LangGraph for building serious agents and RAG apps.</li>
+    <li><strong>Deploy one project for real</strong> — put a working app on the cloud (a service like Render, Vercel, or AWS) so anyone can use it.</li>
+  </ol>
+  <p>That's the Phase-2 path to actually landing the FDE role. Pick up the pace toward a near-daily habit, build 2–3 portfolio projects that look like real FDE work, and start applying. You've already done the hardest part: starting, and not stopping.</p>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>You don't finish here — you graduate to the next phase with momentum, real skills, and a map.</div>
+  </div>
+  `,
+  quiz:[]
+});
+
+/* ============ ENGINE ============ */
+var KEY="aifde6";
+var store=loadStore();
+var state=null;            // the active profile's progress object
+
+function blankProgress(){return {current:0,done:[],scores:{}};}
+function loadStore(){
+  var raw=null;try{raw=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  if(!raw) return {active:null,profiles:{}};
+  if(raw.profiles) return raw;                 // already new format
+  if(raw.done) return {active:"My progress",profiles:{"My progress":raw}}; // migrate old single-user data
+  return {active:null,profiles:{}};
+}
+function saveStore(){localStorage.setItem(KEY,JSON.stringify(store));}
+function saveState(){if(store.active){store.profiles[store.active]=state;}saveStore();}
+function setActive(name){store.active=name;state=store.profiles[name];saveStore();closePMenu();render();}
+function addProfile(name){name=(name||"").trim();if(!name)return;
+  if(!store.profiles[name])store.profiles[name]=blankProgress();setActive(name);}
+function deleteProfile(name){delete store.profiles[name];
+  if(store.active===name){var k=Object.keys(store.profiles);store.active=k.length?k[0]:null;}
+  saveStore();boot();}
+function initial(n){return (String(n).trim()[0]||"?").toUpperCase();}
+function escHtml(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function escAttr(s){return escHtml(s).replace(/'/g,"&#39;");}
+function toast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(window._tt);window._tt=setTimeout(function(){t.classList.remove("show");},1600);}
+
+function buildSidebar(){
+  var aside=document.getElementById("sidebar");aside.innerHTML="";
+  var groups=[];LESSONS.forEach(function(l){if(groups.indexOf(l.group)<0)groups.push(l.group);});
+  groups.forEach(function(g){
+    var h=document.createElement("div");h.className="grp";
+    h.innerHTML='<span class="chev">▼</span> '+g;
+    var wrap=document.createElement("div");
+    h.onclick=function(){h.classList.toggle("collapsed");wrap.classList.toggle("navhide");};
+    aside.appendChild(h);
+    LESSONS.forEach(function(l,i){
+      if(l.group!==g)return;
+      var item=document.createElement("div");
+      item.className="navitem"+(state.done.indexOf(l.id)>=0?" done":"")+(i===state.current?" active":"");
+      item.innerHTML='<span class="dot">'+(state.done.indexOf(l.id)>=0?"✓":"")+'</span><span>'+l.short+'</span>';
+      item.onclick=function(){go(i);if(window.innerWidth<=768)closeSidebar();};
+      wrap.appendChild(item);
+    });
+    aside.appendChild(wrap);
+  });
+  var sw=document.createElement("button");sw.className="resetbtn";sw.textContent="⇄ Switch / add profile";
+  sw.onclick=function(){renderGate();if(window.innerWidth<=768)closeSidebar();};
+  aside.appendChild(sw);
+  var rb=document.createElement("button");rb.className="resetbtn";
+  rb.textContent="↺ Reset "+(store.active||"this profile")+"'s progress";
+  rb.onclick=function(){if(confirm("Reset progress and quiz scores for \""+store.active+"\"? This cannot be undone.")){
+    store.profiles[store.active]=blankProgress();state=store.profiles[store.active];saveStore();render();toast("Progress reset");}};
+  aside.appendChild(rb);
+}
+function updateProgress(){
+  var pct=Math.round(state.done.length/LESSONS.length*100);
+  document.getElementById("progfill").style.width=pct+"%";
+  document.getElementById("progtxt").textContent=pct+"%";
+}
+function go(i){state.current=i;saveState();render();window.scrollTo(0,0);}
+function render(){renderProfileChip();buildSidebar();renderLesson();updateProgress();}
+
+/* ---- profile UI ---- */
+function renderProfileChip(){
+  var area=document.getElementById("profileArea");if(!area)return;
+  if(!store.active){area.innerHTML="";return;}
+  var name=store.active;
+  area.innerHTML='<button class="pchip" id="pchipBtn"><span class="av">'+initial(name)+
+    '</span><span>'+escHtml(name)+'</span><span class="cv">▾</span></button><div class="pmenu" id="pmenu"></div>';
+  document.getElementById("pchipBtn").onclick=function(e){e.stopPropagation();
+    var m=document.getElementById("pmenu");var was=m.classList.contains("open");closePMenu();
+    if(!was){buildPMenu();m.classList.add("open");}};
+}
+function buildPMenu(){
+  var menu=document.getElementById("pmenu");if(!menu)return;
+  var names=Object.keys(store.profiles);var h='<div class="ph">Profiles</div>';
+  names.forEach(function(n){
+    var active=n===store.active;var p=store.profiles[n];
+    var pct=Math.round(p.done.length/LESSONS.length*100);
+    h+='<div class="pi'+(active?" activeP":"")+'" data-sw="'+escAttr(n)+'"><span class="av">'+initial(n)+
+      '</span><span>'+escHtml(n)+'</span><span class="pinfo">'+pct+'%'+(active?" ✓":"")+'</span>'+
+      (names.length>1?'<button class="pdel" data-del="'+escAttr(n)+'" title="Delete profile">✕</button>':"")+'</div>';
+  });
+  h+='<div class="pi padd" id="addProfMenu"><span class="av">＋</span><span>Add profile</span></div>';
+  menu.innerHTML=h;
+  menu.querySelectorAll("[data-sw]").forEach(function(el){el.onclick=function(e){
+    if(e.target.hasAttribute("data-del"))return;setActive(el.getAttribute("data-sw"));};});
+  menu.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(e){e.stopPropagation();
+    var n=b.getAttribute("data-del");if(confirm('Delete profile "'+n+'" and its progress? This cannot be undone.'))deleteProfile(n);};});
+  document.getElementById("addProfMenu").onclick=function(e){e.stopPropagation();
+    var n=prompt("New profile name:");if(n&&n.trim())addProfile(n);};
+}
+function togglePMenu(){var m=document.getElementById("pmenu");if(m)m.classList.toggle("open");}
+function closePMenu(){var m=document.getElementById("pmenu");if(m)m.classList.remove("open");}
+document.addEventListener("click",function(){closePMenu();});
+
+function renderGate(){
+  closePMenu();
+  document.getElementById("sidebar").innerHTML="";
+  document.getElementById("progfill").style.width="0%";
+  document.getElementById("progtxt").textContent="";
+  var area=document.getElementById("profileArea");if(area)area.innerHTML="";
+  var names=Object.keys(store.profiles);
+  var list=names.map(function(n){
+    var p=store.profiles[n];var pct=Math.round(p.done.length/LESSONS.length*100);
+    return '<button class="gateprof" data-n="'+escAttr(n)+'"><span class="av">'+initial(n)+
+      '</span><span>'+escHtml(n)+'</span><span class="gpct">'+pct+'% complete</span></button>';
+  }).join("");
+  document.getElementById("main").innerHTML=
+    '<div class="gate"><h2>Who’s learning?</h2>'+
+    '<p class="gsub">Pick a profile or create a new one. Each profile tracks its own lesson progress and quiz scores on this device.</p>'+
+    (names.length?'<div class="plist">'+list+'</div><div class="gdiv">or create new</div>':"")+
+    '<div class="gadd"><input id="newProf" placeholder="Enter a name…" maxlength="24" autocomplete="off">'+
+    '<button class="btn primary" id="addProfBtn">Create</button></div></div>';
+  document.querySelectorAll(".gateprof").forEach(function(b){
+    b.onclick=function(){setActive(b.getAttribute("data-n"));};});
+  var inp=document.getElementById("newProf");
+  var add=function(){if(inp.value.trim())addProfile(inp.value);};
+  document.getElementById("addProfBtn").onclick=add;
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter")add();});
+  inp.focus();
+}
+function boot(){
+  if(!store.active||!store.profiles[store.active]){renderGate();return;}
+  state=store.profiles[store.active];render();
+}
+
+function renderLesson(){
+  var l=LESSONS[state.current];var m=document.getElementById("main");
+  var html='<div class="lesson"><h2>'+l.title+'</h2>';
+  if(l.objective)html+='<p class="obj">'+l.objective+'</p>';
+  html+=l.body;
+  if(l.quiz&&l.quiz.length){
+    html+='<div class="quiz"><h3>Quick check</h3>';
+    l.quiz.forEach(function(q,qi){
+      html+='<div class="q"><div class="qt">'+(qi+1)+'. '+q.q+'</div>';
+      q.options.forEach(function(o,oi){
+        html+='<button class="opt" data-q="'+qi+'" data-o="'+oi+'">'+o+'</button>';
+      });
+      html+='<div class="fb" id="fb-'+qi+'"></div></div>';
+    });
+    html+='</div>';
+  }
+  var done=state.done.indexOf(l.id)>=0;
+  html+='<div class="navbtns">'+
+    '<button class="btn" id="prevB">← Previous</button>'+
+    '<button class="btn primary" id="doneB">'+(done?"✓ Completed":"Mark lesson complete")+'</button>'+
+    '<button class="btn" id="nextB">Next →</button></div></div>';
+  m.innerHTML=html;
+
+  m.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var qi=+b.getAttribute("data-q"),oi=+b.getAttribute("data-o"),q=l.quiz[qi];
+      var parent=b.parentNode;if(parent.dataset.answered)return;parent.dataset.answered="1";
+      parent.querySelectorAll(".opt").forEach(function(x){x.disabled=true;
+        if(+x.getAttribute("data-o")===q.answer)x.classList.add("correct");});
+      var fb=document.getElementById("fb-"+qi);fb.classList.add("show");
+      if(oi===q.answer){fb.classList.add("ok");fb.innerHTML="✅ Correct. "+q.explain;
+        state.scores[l.id]=(state.scores[l.id]||0)+1;saveState();}
+      else{b.classList.add("wrong");fb.classList.add("no");
+        fb.innerHTML="❌ Not quite. The right answer is highlighted. "+q.explain;}
+    };
+  });
+  document.getElementById("prevB").disabled=state.current===0;
+  document.getElementById("nextB").disabled=state.current===LESSONS.length-1;
+  document.getElementById("prevB").onclick=function(){if(state.current>0)go(state.current-1);};
+  document.getElementById("nextB").onclick=function(){if(state.current<LESSONS.length-1)go(state.current+1);};
+  document.getElementById("doneB").onclick=function(){
+    if(state.done.indexOf(l.id)<0){state.done.push(l.id);saveState();
+      var all=state.done.length===LESSONS.length;
+      render();toast(all?"🎉 Course complete!":"Lesson complete ✓");}
+  };
+  wireCopy();
+}
+function wireCopy(){
+  document.querySelectorAll("pre").forEach(function(pre){
+    if(pre.querySelector(".copybtn"))return;
+    var b=document.createElement("button");b.className="copybtn";b.textContent="Copy";
+    b.onclick=function(){var code=pre.querySelector("code").innerText;
+      function ok(){b.textContent="Copied!";setTimeout(function(){b.textContent="Copy";},1200);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(ok,fallback);}
+      else fallback();
+      function fallback(){var ta=document.createElement("textarea");ta.value=code;document.body.appendChild(ta);
+        ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);ok();}
+    };
+    pre.appendChild(b);
+  });
+}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open");}
+function closeSidebar(){document.getElementById("sidebar").classList.remove("open");}
+function showCertificate(){
+  document.getElementById("certName").textContent=store.active||"Learner";
+  document.getElementById("certDate").textContent=new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+  document.getElementById("certwrap").classList.add("open");
+}
+function closeCertificate(){document.getElementById("certwrap").classList.remove("open");}
+boot();
+</script>
+</body>
+</html>
