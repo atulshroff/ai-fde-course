@@ -290,6 +290,13 @@ LESSONS.push({
   <h3>A quick example</h3>
   <p>Type "The capital of France is" and the model answers "Paris." It isn't looking that up in a database — across the billions of sentences it learned from, "Paris" is overwhelmingly the word that follows. It's <em>predicting</em>, not <em>remembering</em>.</p>
   <p>Once you see AI as a very sophisticated prediction machine rather than a thinking person, everything else in this course will make sense — including why it sometimes gets things confidently wrong (that's next week).</p>
+
+  <h3>Going deeper</h3>
+  <p>The prediction doesn't happen one word at a time in a simple left-to-right way. Modern LLMs use a technique called <strong>attention</strong>, which means the model looks at all the words in your input at once and figures out which ones most influence what comes next. That's why it can understand a long, complex question rather than getting lost at word three.</p>
+  <p>For Mihron AI, this matters practically: when a caller asks your voice agent "Can someone call me back tomorrow morning about changing my appointment?" the model isn't just matching keywords — it's weighing "call back," "tomorrow morning," and "appointment" together to decide what kind of response is needed. That holistic understanding is what makes modern AI agents far more capable than old-school chatbots that only matched fixed phrases.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>People assume the model "looked it up" when it gives a correct answer, and therefore trust all its answers equally. In reality it predicted the answer — which means it can be confidently wrong just as easily as confidently right. Verification matters.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free account on both ChatGPT (chat.openai.com) and Claude (claude.ai). Ask both the same 5 questions — mix easy facts with opinions. Notice where they shine and where they differ.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An LLM is autocomplete on steroids: it predicts likely text. It doesn't "know" things the way you do.</div>
   `,
@@ -313,6 +320,13 @@ LESSONS.push({
   <p>Because the model predicts <em>likely-sounding</em> text, it will sometimes produce something that sounds right but is false. This is a <strong>hallucination</strong>.</p>
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>Picture a very well-read student who never says "I don't know." Ask about a book they haven't read and they'll smoothly invent a plausible summary. Ask an LLM for "three studies proving X" and it may invent realistic-looking studies that don't exist.</div>
   <p>This matters enormously for a future FDE: you'll build systems that <em>check</em> and <em>ground</em> AI answers in real data (you'll learn exactly how in Month 4). Never trust an LLM as a source of truth on its own.</p>
+
+  <h3>Going deeper</h3>
+  <p>Context windows have been growing fast — early models could only see a few thousand tokens at once, but modern models can handle hundreds of thousands. Even so, the bigger the context, the more expensive the call (you pay per token), and the model may pay less attention to things buried in the middle of a very long document. So even when context windows are huge, good engineers are thoughtful about what they include.</p>
+  <p>Hallucinations are not random noise — they follow a pattern. Models tend to hallucinate most when they are asked about <em>specific details</em> they have no strong training signal for: exact dates, statistics, obscure citations, or recent events after their training cutoff. They're most reliable on general, well-documented knowledge. For Mihron AI's voice agents, this means you should never let the model guess your pricing, availability, or specific policies — always give it those facts directly in the context.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Imagine the context window as a whiteboard the model can see during a conversation. Every time you start a new chat, someone erases it. Mid-conversation, old lines scroll off the bottom as new ones are added. That's why very long conversations can cause the model to "forget" what was said at the start.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Deliberately get an AI to be confidently wrong — ask for very specific obscure facts or recent events. Screenshot one good example. Now you've seen a hallucination in the wild.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>AI has limited short-term memory (context window) and will sometimes sound certain while being wrong (hallucinate). Always verify important answers.</div>
   `,
@@ -339,7 +353,13 @@ LESSONS.push({
   <p><strong>Weak:</strong> "Write about dogs."<br>
   <strong>Strong:</strong> "Write a friendly 100-word paragraph for a pet-store website explaining why golden retrievers are good family dogs. Warm tone, end with a call to visit the store."</p>
   <p>The strong prompt gives a role, length, audience, tone, and goal — so the output is dramatically better. Same model, totally different result.</p>
-  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An LLM is like a world-class freelancer who does <em>exactly</em> the brief you give. A vague brief gets vague work. A clear brief gets great work.</div>
+
+  <h3>Going deeper</h3>
+  <p>One of the most powerful but underused techniques is giving an <strong>example in the prompt</strong> — this is called "few-shot prompting." Instead of just describing what you want, you show one finished example, then ask for more. The model learns your exact style, tone, and format from the example far better than from a description alone.</p>
+  <p>For Mihron AI, imagine you want to generate short text-message follow-ups for missed calls. A lazy prompt gets generic messages. But if you include one example — "Example: Hi Sarah, this is Maya from Apex Dental. I missed your call — are you still looking to schedule your cleaning? Reply YES and I'll book you right in." — the model will nail the tone, length, and call-to-action format every time.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Adding more words to a prompt is not the same as adding more specificity. "Please write a really good, very professional, high-quality email" is still vague — it doesn't say <em>what</em> professional means for this audience. Replace vague adjectives with concrete instructions: length, format, what to include, what to avoid.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take a real task from Mihron AI — say, a follow-up email to a client. Write a lazy one-line prompt, then improve it three times (add audience, tone, length, a goal). Save the before-and-after; the difference will surprise you.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Be specific, give a role, give an example, ask for steps. That's 90% of prompting.</div>
   `,
@@ -364,6 +384,11 @@ LESSONS.push({
     <li><strong>Bias</strong> — models learned from human text, so they can repeat human biases. Stay alert.</li>
     <li><strong>Honesty</strong> — verify facts before you act on them; don't pass off AI output as guaranteed truth.</li>
   </ul>
+
+  <h3>Going deeper</h3>
+  <p>The system prompt is more powerful than most people realize. It's not just for setting a polite tone — it's where you define <em>rules</em>: what the assistant must never say, how it should handle topics it doesn't know, and what format it always uses. A well-crafted system prompt means you spend less time correcting the model and more time using it. For a Mihron AI voice agent, the system prompt might say: "You are Maya, a friendly scheduling assistant. Never quote prices. If asked a medical question, say 'I can't help with that — let me connect you to a human.' Always confirm the caller's name before booking."</p>
+  <p>On bias: this is subtle but real. If you build a hiring tool that screens resumes using an LLM, and the training data over-represented certain groups, the model may unconsciously favor certain writing styles or backgrounds. This isn't malicious — it's a reflection of patterns in data. Being aware of it means you can test for it, and as an FDE you should always ask "who could be harmed if this output is wrong?"</p>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>The system prompt is the employee handbook; user prompts are the daily to-do list. Set the handbook well and every task goes smoother.</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Build a small "prompt playbook" — five reusable prompts for tasks you do often at Mihron AI (e.g., draft a client reply, summarize a call, write a service description). Save them in a note. This is your first reusable asset.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>You can steer AI with system vs. user instructions and explicit format/length/tone — and you must use it responsibly with private data.</div>
@@ -389,6 +414,19 @@ LESSONS.push({
   <p>Type this into a cell and press play:</p>
   <pre><code>print("Hello, I'm learning AI")   <span class="cmt"># print() shows text on the screen</span></code></pre>
   <p>You'll see your words appear below the cell. That little <code>print()</code> is a built-in instruction that displays whatever you put inside its parentheses. The <span class="cmt"># text</span> is a <strong>comment</strong> — a note for humans that the computer ignores.</p>
+
+  <h3>Going deeper</h3>
+  <p>Python is case-sensitive — <code>Print</code> (capital P) and <code>print</code> (lowercase p) are completely different things. <code>print</code> is a built-in command; <code>Print</code> will cause an error. This trips up beginners constantly and is totally normal. Errors are not failures — they are the computer being precise and telling you exactly what it needs.</p>
+  <p>Colab notebooks run top to bottom, one cell at a time. If you define something in cell 3, code in cell 1 won't know about it unless you run cell 3 first. Think of each notebook session as a fresh start — if you close the tab and come back, you'll need to re-run your cells. That's expected behavior, not a bug.</p>
+
+  <pre><code><span class="cmt"># A slightly richer first program — building a Mihron AI greeting</span>
+business = "Mihron AI"           <span class="cmt"># store the business name</span>
+print("Welcome to " + business)  <span class="cmt"># glue and print two strings</span>
+print("We handle calls 24/7.")    <span class="cmt"># a second print on a new line</span>
+print(5 * 3)                      <span class="cmt"># you can also print math: prints 15</span></code></pre>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Forgetting the closing quotation mark or parenthesis is the most common beginner error. Python will show a "SyntaxError" — read the error message, find the mismatched symbol, and fix it. Error messages are clues, not insults.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, run the line above. Then change the words inside the quotes and run it again. Add a second line: <code>print(2 + 2)</code> and watch it print 4. You just ran code.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Code is precise instructions for a literal computer. <code>print()</code> displays things, and <code>#</code> starts a comment.</div>
   `,
@@ -416,6 +454,21 @@ print("Hello, " + name)  <span class="cmt"># prints: Hello, Atul</span></code></
   <pre><code>age = 25            <span class="cmt"># a number</span>
 is_student = True   <span class="cmt"># a boolean (yes/no)</span>
 print(name, "is", age)   <span class="cmt"># prints: Atul is 25</span></code></pre>
+  <h3>Going deeper</h3>
+  <p>Variable names matter — use clear, descriptive names, not single letters. <code>client_name</code> is far better than <code>x</code>. Python convention is to use lowercase words separated by underscores (called "snake_case"). Good names make your code readable to yourself six months from now.</p>
+  <p>You can change a variable's value at any time just by assigning again. The box gets a new value — the old one is gone. And Python figures out the type automatically: you don't have to say "this is a string" — it sees the quotes and knows.</p>
+
+  <pre><code><span class="cmt"># A small Mihron AI client record</span>
+client_name = "Sara Patel"          <span class="cmt"># string: the client's name</span>
+calls_missed = 3                    <span class="cmt"># integer: number of missed calls</span>
+is_booked = False                   <span class="cmt"># boolean: has she been followed up?</span>
+
+<span class="cmt"># str() converts the number to text so we can join it</span>
+print(client_name + " missed " + str(calls_missed) + " calls.")
+print("Booking confirmed:", is_booked)   <span class="cmt"># prints: Booking confirmed: False</span></code></pre>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Trying to add a number to a string without converting it: <code>"Age: " + 25</code> causes a TypeError. Python won't silently convert — you must wrap the number: <code>"Age: " + str(25)</code>. Or use an f-string (you'll learn those soon), which handles this automatically.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, make three variables: your name (string), your age (number), and a sentence that combines them with print(). Example: <code>print(name + " is " + str(age))</code>. (We wrap the number in <code>str()</code> to turn it into text so it can be glued to other text.)</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Variables are named boxes that store values. The three basics: strings (text), numbers, and booleans (true/false).</div>
   `,
@@ -443,6 +496,27 @@ else:
   <pre><code>services = ["Voice agent", "SMS bot", "Booking flow"]
 print(services[0])   <span class="cmt"># prints the first item: Voice agent</span></code></pre>
   <p>Notice counting starts at <strong>0</strong>, so <code>services[0]</code> is the first item. That trips up every beginner — it's normal.</p>
+
+  <h3>Going deeper</h3>
+  <p>You can chain more than one condition with <code>elif</code> (short for "else if"). This lets you handle several cases: if the number is over 1000, print "huge"; elif it's over 100, print "big"; else print "small." <code>elif</code> is checked only if the previous <code>if</code> was false — the first matching branch runs, and the rest are skipped.</p>
+  <p>Lists can hold any type of value — even a mix of types. You can also find out how many items are in a list with <code>len()</code>, and add new items with <code>.append()</code>. These two operations come up constantly in real programs.</p>
+
+  <pre><code><span class="cmt"># Routing a Mihron AI call based on how many times someone called</span>
+call_count = 4
+
+if call_count >= 5:
+    print("High priority — call immediately")   <span class="cmt"># 5 or more calls</span>
+elif call_count >= 2:
+    print("Follow up today")                    <span class="cmt"># 2 to 4 calls</span>
+else:
+    print("Add to weekly outreach list")        <span class="cmt"># 1 call</span>
+
+<span class="cmt"># Working with a list of leads</span>
+leads = ["Carlos", "Priya", "Sam"]
+leads.append("Jordan")         <span class="cmt"># add a new lead to the end</span>
+print(len(leads))              <span class="cmt"># prints 4 — there are now 4 leads</span>
+print(leads[1])                <span class="cmt"># prints Priya (remember: 0 is first)</span></code></pre>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a program: set a variable to a number, and print "big" if it's over 100, else "small". Then make a list of three Mihron AI services and print the second one.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>if/else lets a program choose; lists store many values in order, counted from 0.</div>
   `,
@@ -470,6 +544,23 @@ for n in names:            <span class="cmt"># go through the list, one at a tim
 
 print(greet("Atul"))       <span class="cmt"># call it: prints Hello, Atul</span></code></pre>
   <p>The word in parentheses (<code>name</code>) is the input you hand in. <code>return</code> is the answer it hands back. Define once, call as many times as you like.</p>
+
+  <h3>Going deeper</h3>
+  <p>A function can have more than one input — just separate them with commas in the parentheses: <code>def greet(name, company):</code>. This makes functions flexible enough to handle different situations without rewriting the logic. Functions also make your code easier to fix: if the greeting format changes, you update the function in one place and every call to it gets the fix automatically.</p>
+  <p>The indentation (the spaces before lines inside a loop or function) is not just style in Python — it's required. Python uses it to know which lines belong inside the block. Getting indentation wrong is one of the most common early errors. The rule: everything inside a <code>for</code>, <code>if</code>, or <code>def</code> must be indented consistently (4 spaces is the standard).</p>
+
+  <pre><code><span class="cmt"># A reusable function to build a Mihron AI follow-up message</span>
+def follow_up_message(client_name, service):
+    <span class="cmt"># Takes a name and a service, returns a short follow-up text</span>
+    return "Hi " + client_name + ", just following up on your interest in " + service + ". Reply YES to book a quick call."
+
+<span class="cmt"># Use a loop to generate messages for multiple leads at once</span>
+leads = [("Carlos", "Voice Agent"), ("Priya", "SMS Bot"), ("Sam", "Booking Flow")]
+for name, svc in leads:
+    print(follow_up_message(name, svc))   <span class="cmt"># prints 3 personalised messages</span></code></pre>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Writing a function but forgetting <code>return</code> — or using <code>print()</code> instead of <code>return</code>. A function that prints shows you something on screen but hands nothing back to the caller. A function that returns gives the value back so you can store it, use it in another calculation, or pass it to another function. Both have their place, but they're different.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a function <code>greet(name)</code> that returns a greeting, then use a for loop to greet a list of three names. You just combined both ideas — that's real programming.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Loops repeat work for each item; functions package work so you can reuse it by name.</div>
   `,
@@ -493,6 +584,13 @@ LESSONS.push({
   <p>To use an API you need an <strong>API key</strong> — a secret password that identifies you, so the provider knows who's asking and who to bill. Treat it exactly like a credit card number: never share it, never post it publicly, never put it in a screenshot.</p>
   <h3>What "calling" an API means</h3>
   <p>"Calling the API" just means your program sends a request and waits for the response. That's it. Almost every AI product you've ever used is, underneath, code making API calls to a model and doing something useful with the reply.</p>
+
+  <h3>Going deeper</h3>
+  <p>APIs communicate using a standard called <strong>HTTP</strong> — the same protocol your browser uses to load web pages. When you call an AI API, your code sends an HTTP request (a structured message) to the provider's server, and gets back a structured response, usually in a format called <strong>JSON</strong>. JSON is just text organised as key-value pairs, like a well-labelled package. You'll see it in Week 10 — it looks friendlier than it sounds.</p>
+  <p>For Mihron AI, think about what your voice agents are doing under the hood: when a caller asks a question, the voice software converts speech to text, then makes an API call to an LLM with that text, gets a response, converts it back to speech, and plays it to the caller — often in under a second. The API call is the critical link in that chain. Understanding it means you can debug when something breaks and improve it when it's slow.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>People often confuse the AI model with the API. The model is the brain doing the thinking. The API is the doorway you use to reach it. You never interact with the model directly — you always go through the API. This is why changing model providers (say, from OpenAI to Anthropic) mostly means updating a few lines of API code, not rebuilding your whole system.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Create an account with an AI provider that offers an API (e.g., OpenAI or Anthropic), find the "API keys" section, and generate one key. Copy it somewhere safe and private — you'll use it next week. Do not share it with anyone.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An API is a doorway between programs (the restaurant waiter). An API key is your secret password — guard it like a credit card.</div>
   `,
@@ -530,6 +628,24 @@ response = client.chat.completions.create(  <span class="cmt"># make the call</s
 
 print(response.choices[0].message.content)  <span class="cmt"># print the reply</span></code></pre>
   <p>That last line digs into the response to pull out just the text and prints it. When you run this, the AI's sentence appears below your cell — generated by a program <em>you</em> wrote.</p>
+
+  <h3>Going deeper</h3>
+  <p>The <code>messages</code> list can hold more than one message. That's how you build a multi-turn conversation: you add the assistant's reply to the list, then add the next user message, and send the whole list again. The model sees the full history and responds in context — that's how chatbots remember what was said earlier. Every message has a "role": <code>"user"</code> for you, <code>"assistant"</code> for the model, and <code>"system"</code> for your background instructions.</p>
+  <p>The <code>model</code> parameter is where you choose which AI brain to use. Different models trade off speed, cost, and capability — <code>gpt-4o-mini</code> is fast and cheap, great for prototyping. A production voice agent at Mihron AI would choose based on the latency needed (voice is unforgiving — every extra 200ms is noticeable) and the task complexity. Picking the right model for the job is a real FDE skill.</p>
+
+  <pre><code><span class="cmt"># A quick experiment: send a system prompt plus a user message</span>
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system",
+         "content": "You are Maya, a friendly assistant for Mihron AI. Keep replies under 30 words."},
+        {"role": "user",
+         "content": "Do you handle after-hours calls?"}
+    ]
+)
+<span class="cmt"># The model will answer in character as Maya, briefly</span>
+print(response.choices[0].message.content)</code></pre>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>You wrote the order slip (messages), handed it to the waiter with your membership card (api_key), and read the dish description it brought back (the printed reply).</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>In Colab, paste the recipe, replace YOUR_KEY with your real key, and run it. Then change the question and run again. Congratulations — you just built an AI program.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An API call = package → send (with key) → model processes → you get text back. This is THE core skill of AI engineering.</div>
@@ -569,6 +685,25 @@ for q in questions:
 except:
     print("Something went wrong — check your key or connection.")</code></pre>
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>try/except is a safety net: attempt the trick, and if you fall, land softly instead of crashing to the floor.</div>
+  <h3>Going deeper</h3>
+  <p>When you loop over many questions, each one makes a separate API call — and each call costs tokens and takes time. In a real production system you'd think about <em>batching</em> (grouping requests) and <em>rate limits</em> (each provider limits how many calls you can make per minute). For a Mihron AI deployment handling dozens of calls simultaneously, understanding these limits is essential — hitting a rate limit mid-call would be a bad experience for a caller.</p>
+  <p>The <code>try/except</code> block is more than a safety net — it's also where you add logging: record what went wrong, when, and for whom, so you can debug and improve later. In production AI systems, good error logging is the difference between a system you can maintain and one you're constantly guessing about.</p>
+
+  <pre><code><span class="cmt"># A more robust version: log errors instead of just printing them</span>
+questions = ["What services do you offer?", "What are your hours?"]
+
+for q in questions:
+    try:
+        r = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": q}]
+        )
+        answer = r.choices[0].message.content   <span class="cmt"># save the reply</span>
+        print(f"Q: {q}\nA: {answer}\n")         <span class="cmt"># f-string for clean output</span>
+    except Exception as e:
+        <span class="cmt"># 'e' contains the actual error message — useful for debugging</span>
+        print(f"Failed on question '{q}': {e}")</code></pre>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Put three questions in a list and loop over them, printing each answer. You now have an AI program that handles many inputs at once.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Store replies in variables, format text with f-strings, loop to handle many inputs, and use try/except so failures don't crash you.</div>
   `,
@@ -605,6 +740,25 @@ prompt = f"You are a friendly assistant for Mihron AI. Write a short, warm email
 r = client.chat.completions.create(model="gpt-4o-mini",
     messages=[{"role":"user","content":prompt}])
 print(r.choices[0].message.content)</code></pre>
+  <h3>Going deeper</h3>
+  <p>Notice the pattern in Project B: you didn't write the email — you built a system that writes emails on demand, personalised to any client and topic. That's the shift in thinking that defines AI engineering. You're building a <em>tool factory</em>, not individual tools. The same 15-line script can draft thousands of different emails by just changing the inputs.</p>
+  <p>You can make Project B even stronger by adding a <code>tone</code> input — "professional," "casual," "urgent" — and weaving it into the prompt. That single addition makes your tool flexible enough to handle completely different client relationships without changing any logic. Try it: add <code>tone = input("Tone (professional/casual): ")</code> and include it in the prompt string.</p>
+
+  <pre><code><span class="cmt"># Extended Project B: add tone control to the email drafter</span>
+client_name = input("Client name: ")
+topic = input("What is the email about? ")
+tone = input("Tone (professional / friendly / urgent): ")
+
+prompt = f"""You are a helpful assistant for Mihron AI.
+Write a short {tone} email to {client_name} about: {topic}.
+Keep it under 120 words. End with a clear next step."""
+
+r = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": prompt}]
+)
+print(r.choices[0].message.content)   <span class="cmt"># print the personalised draft</span></code></pre>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>You're no longer just ordering one dish — you've opened a tiny kitchen of your own that takes custom orders and serves them.</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Build Project A, run it, ask a few questions. Then build Project B and generate a real draft email for a Mihron AI client. Save the notebook — this is your first portfolio piece. 🎉</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>A real AI tool is just: get input → build a good prompt → call the model → use the reply. You can now do all four.</div>
@@ -626,6 +780,27 @@ LESSONS.push({
   <p>An <strong>embedding</strong> turns a piece of text into a list of numbers that captures its <em>meaning</em>. Sentences that mean similar things get similar numbers; unrelated sentences get very different numbers.</p>
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>Think of a giant map where every sentence is a pin. Sentences about "after-hours phone support" land close together; a sentence about "pizza recipes" lands far away. The embedding is the pin's coordinates.</div>
   <p>Why does this matter? Because once meaning is numbers, a computer can <em>measure</em> how close two pieces of text are in meaning — even if they share no words. "Do you work late?" and "Are you open after 6pm?" use different words but mean almost the same thing, so their embeddings sit close together.</p>
+
+  <h3>Going deeper</h3>
+  <p>An embedding is typically a list of several hundred or even thousands of numbers (called a "vector"). Each number captures some tiny aspect of meaning — though in practice those dimensions aren't human-readable; the model discovers them automatically during training. What matters is that the geometry works: similar things land near each other, different things land far apart.</p>
+  <p>You can actually generate embeddings from code using API calls, just like you call a chat model. The embedding API takes your text and returns that list of numbers. For Mihron AI, every page of your service documentation would be converted into an embedding and stored — that's what lets a customer ask "do you work evenings?" and get back the exact paragraph about your hours, even though they didn't use the keyword "hours."</p>
+
+  <pre><code><span class="cmt"># Example: generating an embedding with the OpenAI API</span>
+<span class="cmt"># (run after installing: pip install openai)</span>
+from openai import OpenAI
+client = OpenAI(api_key="YOUR_KEY")
+
+text = "Mihron AI answers calls 24/7 and books appointments."
+result = client.embeddings.create(
+    model="text-embedding-3-small",   <span class="cmt"># a fast, cheap embedding model</span>
+    input=text
+)
+embedding = result.data[0].embedding  <span class="cmt"># a list of ~1536 numbers</span>
+print(f"Embedding length: {len(embedding)}")   <span class="cmt"># prints: Embedding length: 1536</span>
+print(f"First 5 numbers: {embedding[:5]}")    <span class="cmt"># just a peek at the numbers</span></code></pre>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Beginners sometimes assume embeddings work like keywords — that two sentences must share words to be "close." They don't. Embeddings capture concepts, not words. That's their whole power: "Is your office open on weekends?" and "What are your Saturday hours?" share almost no words but would have very similar embeddings.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write down three sentences that mean roughly the same thing in different words, and one that's totally unrelated. Imagine them as pins on a map: which three cluster together, and which one sits far away? That clustering is what embeddings capture.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An embedding is meaning turned into numbers. Similar meaning → similar numbers → measurable closeness.</div>
   `,
@@ -651,6 +826,13 @@ LESSONS.push({
   </ul>
   <p>A customer asks: "Can I reach you in the middle of the night?" The vector database compares the question's embedding to all three and returns the first one — closest in meaning — even though the words are completely different.</p>
   <p>Popular vector databases you'll hear about: Pinecone, Chroma, Weaviate, FAISS. You don't need them yet — just understand what they do.</p>
+
+  <h3>Going deeper</h3>
+  <p>The similarity score that vector databases use is most often called <strong>cosine similarity</strong> — a number between 0 and 1 that measures how close two vectors are in direction. A score of 1.0 means identical meaning; 0 means completely unrelated. In practice you retrieve the top 3–5 closest chunks (not just the single best one), because the best match might only partially answer the question, and the second-best might fill the gap.</p>
+  <p>The number of chunks you retrieve is called <strong>top-k</strong>. Choosing k is a tradeoff: retrieve too few and you might miss the relevant paragraph; retrieve too many and you flood the LLM's context window with noise, which can confuse it. For a Mihron AI FAQ bot, k = 3 is often a good starting point — enough to cover a multi-part question without overwhelming the model.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Think of a vector database like a very smart librarian. You describe what you're looking for in plain language — "something about late-night availability" — and the librarian pulls the three books most likely to answer you, even if none of them contain the exact words "late-night availability."</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take the three example sentences above. For each of these questions, pick which sentence a meaning-search would return: (1) "How much does it cost?" (2) "Do you speak Spanish?" (3) "Are you open at 3am?"</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>A vector database stores embeddings and finds the closest ones by meaning — that's similarity search.</div>
   `,
@@ -676,6 +858,13 @@ LESSONS.push({
   </ol>
   <h3>Trace it on a real example</h3>
   <p>Your Mihron AI service doc is chunked, embedded, and stored. A customer asks your website bot, "Do you offer after-hours voice agents?" RAG <em>retrieves</em> the paragraph that mentions after-hours coverage, hands it to the model, and the bot answers accurately from <em>your</em> real offering — instead of guessing or hallucinating.</p>
+
+  <h3>Going deeper</h3>
+  <p>The chunk size in Step 1 is an important choice. Too large (whole pages) and you retrieve a lot of irrelevant text along with the relevant bit, which fills the context window with noise. Too small (single sentences) and you may retrieve a sentence that makes no sense without the surrounding context. A common sweet spot is 300–500 words per chunk, with a small overlap between consecutive chunks so nothing important falls in the gap between two pieces.</p>
+  <p>RAG doesn't just help with accuracy — it also helps with <em>freshness</em>. Because the knowledge lives in your own database (not baked into the model's training), you can update it any time. When Mihron AI changes its pricing, you update the doc, re-embed the new chunk, and the bot immediately answers with the new price — no retraining required. That's a massive practical advantage for any business that changes its services over time.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Treating RAG as a magic fix for all hallucinations. RAG only helps if the answer is actually in your documents. If a customer asks something your docs don't cover, the model may still hallucinate — or, if you instructed it well, it will say "I don't have that information." Good RAG systems always include a clear fallback for out-of-scope questions.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Take a real Mihron AI document in your head and walk it through all five steps out loud: chunk → embed → store → retrieve → generate. If you can narrate it without notes, you've got RAG.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>RAG = chunk → embed → store → retrieve → generate. It grounds AI answers in your own documents (the open-book exam).</div>
   `,
@@ -715,6 +904,40 @@ print(r.choices[0].message.content)</code></pre>
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>You handed the student the open textbook page and said "answer only from this page." No more making things up.</div>
   <h3>How this grows into real RAG</h3>
   <p>When your documents are too big to paste, you swap the "paste the whole doc" step for the full pipeline from last week: chunk, embed, store, and retrieve only the most relevant chunk to paste in. Same idea, just scalable.</p>
+
+  <h3>Going deeper</h3>
+  <p>The phrase "answer ONLY from the document below" is doing serious work in this prompt. Without it, the model will blend what's in your document with whatever it knows from training — and the training data might be outdated, wrong for your business, or made up. With it, the model stays grounded. This instruction pattern has a name in AI engineering: it's called a <strong>grounding instruction</strong>, and it's one of the most important prompting techniques for building reliable Q&amp;A bots.</p>
+  <p>Notice you're also telling it what to do when the answer isn't in the document ("say I don't know"). This is the fallback — and it's just as important as the main answer. A bot that gracefully admits it doesn't know is far more trustworthy than one that confidently invents an answer. For Mihron AI clients, a smooth fallback ("I don't have that info — let me connect you to the team") preserves trust and creates a warm handoff.</p>
+
+  <pre><code><span class="cmt"># Extended version: handle multiple questions with a loop</span>
+document = """
+Mihron AI provides AI voice agents for small businesses.
+We handle inbound and outbound calls 24 hours a day, 7 days a week.
+Pricing starts at 99 dollars per month.
+We support English and Spanish.
+Setup takes 2 to 3 business days.
+"""
+
+questions = [
+    "What languages do you support?",
+    "How long does setup take?",
+    "Do you offer a free trial?"    <span class="cmt"># not in the document — should say 'I don't know'</span>
+]
+
+for q in questions:
+    prompt = f"""Answer using ONLY the document below.
+If the answer is not in it, say: 'I don't have that info — please contact the team.'
+
+DOCUMENT: {document}
+
+QUESTION: {q}"""
+    r = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    print(f"Q: {q}")
+    print(f"A: {r.choices[0].message.content}\n")</code></pre>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Paste a real Mihron AI FAQ into the document variable, run it, and ask 3 questions — including one the doc can't answer (check that it says "I don't know"). Save it — portfolio piece #2. 🎉</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Give the model the source text and tell it to answer only from that text — that's RAG in miniature, and it crushes hallucinations.</div>
   `,
@@ -742,6 +965,26 @@ LESSONS.push({
     <li>Model: "It's 3:42 PM." (now using the real result)</li>
   </ol>
   <p>The crucial insight: the model doesn't actually run anything itself. It <em>decides</em>; your code <em>does</em>. That separation is what makes tools safe and powerful.</p>
+
+  <h3>Going deeper</h3>
+  <p>When you define a tool for the model, you don't just give it the function — you also give it a <em>description</em> of what the tool does and what each input means. The model uses that description to decide <em>when</em> to use it. A good tool description is like a good job description: it tells the model what the tool is for, what it expects, and what it returns. A vague description leads to the model using the tool at the wrong moment — or not at all.</p>
+  <p>Tool calling is the foundation of all real AI automation. Your Mihron AI voice agents are already doing this: when a caller wants to book an appointment, the model (the AI brain on the call) decides to invoke a booking tool, passes in the date and time the caller said, and your backend code actually writes to the calendar. The caller never knows — they just hear "you're all set for Tuesday at 3pm." That seamless experience is powered by well-defined tools.</p>
+
+  <pre><code><span class="cmt"># A simple Python function that acts as a "tool" the model could call</span>
+def check_availability(date, time_slot):
+    <span class="cmt"># In a real system this would query a calendar API</span>
+    <span class="cmt"># For now, we simulate: Tuesday 3pm is always open</span>
+    if date == "Tuesday" and time_slot == "3pm":
+        return {"available": True, "slot": "Tuesday 3pm"}
+    else:
+        return {"available": False, "slot": None}
+
+<span class="cmt"># When the model calls this tool, your code runs it and sends back the result</span>
+result = check_availability("Tuesday", "3pm")
+print(result)   <span class="cmt"># {'available': True, 'slot': 'Tuesday 3pm'}</span></code></pre>
+
+  <div class="callout c-an"><span class="ct">🧠 Common mistake</span>Giving the model too many tools at once. If you expose 20 functions, the model has to read and reason about all of them to pick the right one — this slows it down and increases mistakes. Start with 3–5 well-defined tools. Add more only when the simpler set genuinely can't handle the task.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>On paper, design one tool you'd give an AI for Mihron AI (e.g., <code>check_availability(date)</code>). Write what it takes in and what it gives back. That's the whole skill — defining clear tools.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Tool calling = the model decides which of your functions to run; your code runs it and returns the result. The model decides, your code acts.</div>
   `,
@@ -767,6 +1010,13 @@ LESSONS.push({
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>A chatbot is a knowledgeable person on the phone who can only <em>talk</em>. An agent is an assistant with <em>hands and a to-do list</em>: it can open the calendar, send the email, check the result, and keep going until the job's done.</div>
   <h3>Chatbot vs. agent</h3>
   <p>Ask a chatbot to "book me a haircut Friday" and it'll say "Sure, here's how you could do that." Ask an agent and it will actually check the calendar, reserve the slot, send a confirmation, and tell you it's done. The difference is <em>action</em>.</p>
+
+  <h3>Going deeper</h3>
+  <p>The "observe" step is more important than it sounds. When the model receives a tool's result, it doesn't just pass it through — it <em>reasons</em> about it. If the calendar says the slot is full, the model adapts: "Friday 2pm is taken — let me check 3pm instead." That adaptive behaviour is what makes an agent genuinely useful rather than just a script that crashes if anything goes unexpected.</p>
+  <p>Agents can also call themselves — or other agents. A "manager agent" might break a complex task into sub-tasks and hand each one to a specialised "sub-agent." This is called a multi-agent architecture. For Mihron AI, you might have one agent that handles the voice conversation and a second that handles the database write — each focused on its job, coordinated by the first. You don't need this complexity for a beginner project, but knowing it exists explains why the biggest AI products work the way they do.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>A chatbot is a knowledgeable person on the phone who can only <em>talk</em>. An agent is an assistant with <em>hands, a calendar, and a to-do list</em>: it can open the calendar, send the email, check the result, and keep going until the job's done. And if the first attempt fails, it tries the next option — it doesn't just hang up.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write out the think→act→observe steps an agent would take to answer "Am I free Friday at 2, and if so book a call with Sara?" List each tool it would call in order.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An agent is an LLM in a loop (think → act → observe → repeat) that takes actions. A chatbot only talks; an agent does.</div>
   `,
@@ -796,6 +1046,30 @@ LESSONS.push({
     <li><strong>Reply:</strong> "You're booked for Friday at 2 — confirmation texted."</li>
   </ol>
   <p>The model is the <em>brain</em> deciding when to use each tool. Each tool is a small piece of code you wrote. This exact pattern — a model orchestrating a few tools in a loop — is the architecture behind modern voice agents.</p>
+
+  <h3>Going deeper</h3>
+  <p>One thing to notice in the three-step example above: each tool call is <em>independent</em> and testable. You can run <code>check_availability("Friday", "2pm")</code> in isolation and confirm it returns the right thing, without involving the model at all. This is a huge practical advantage — when something goes wrong, you can narrow down whether the bug is in the model's decision-making, in a specific tool, or in how you're passing results back. Good tool design means each piece is simple enough to test alone.</p>
+  <p>For a real Mihron AI deployment, the booking agent needs a few extra safety checks: what if the caller's name is missing? What if the date is ambiguous — "Friday" could mean this Friday or next Friday? A production agent handles these by asking a clarifying question ("Which Friday do you mean — the 28th or the 4th?") before committing to a booking. Teaching the model to ask clarifying questions before acting on ambiguous input is a sign of a well-designed agent.</p>
+
+  <pre><code><span class="cmt"># A skeleton of the booking agent's three tools as Python functions</span>
+def check_availability(date, time):
+    <span class="cmt"># Returns True if the slot is open (simulated here)</span>
+    return {"available": True, "date": date, "time": time}
+
+def book_appointment(name, date, time):
+    <span class="cmt"># Writes to the calendar (simulated)</span>
+    return {"confirmed": True, "ref": "BOOK-001", "name": name}
+
+def send_confirmation(name, phone):
+    <span class="cmt"># Sends a text (simulated)</span>
+    return {"sent": True, "to": phone, "message": f"Hi {name}, you're booked!"}
+
+<span class="cmt"># The model calls these in order — your code runs each one and feeds back the result</span>
+step1 = check_availability("Friday", "2pm")
+step2 = book_appointment("Priya Shah", "Friday", "2pm")
+step3 = send_confirmation("Priya Shah", "+1-555-0101")
+print(step3)   <span class="cmt"># {'sent': True, 'to': '+1-555-0101', 'message': 'Hi Priya Shah, you're booked!'}</span></code></pre>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>The model is a receptionist with a phone, a calendar, and a text-message pad. It uses each at the right moment to get the caller booked.</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Sketch a second agent for Mihron AI — maybe a "missed-call follow-up" agent. What 2–3 tools would it need, and in what order would it use them?</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An agent = a model brain + a few well-defined tools, used in a loop. That's exactly how voice agents work under the hood.</div>
@@ -822,6 +1096,13 @@ LESSONS.push({
     <li><strong>Code:</strong> needed when logic gets complex, custom, or high-volume — and it's what an FDE often reaches for.</li>
   </ul>
   <p>A great FDE knows both, and picks the simplest tool that solves the customer's problem.</p>
+
+  <h3>Going deeper</h3>
+  <p>Webhooks are everywhere in modern software, even when they're invisible. When a client fills out a "Contact Us" form on a Mihron AI client's website, a webhook can instantly trigger: a CRM entry is created, a Slack notification goes to the sales team, and an SMS is sent to the lead — all in under a second, with no human involved. Building that kind of real-time responsiveness with traditional code would take hours; with a no-code tool it takes twenty minutes.</p>
+  <p>The place where no-code breaks down is <em>conditional logic</em>. Zapier handles "if X, then Y" beautifully, but "if X and Y and not Z, then branch to A or B depending on the value of C" quickly becomes painful to build in a visual interface. That's when writing 30 lines of Python is faster, more reliable, and easier to read six months later. Recognising that crossover point — and knowing it exists — is what separates a capable automation builder from a frustrated one.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Automation is a row of dominoes. You tip the first one (a form submission) and the rest fall on their own (text sent, sheet updated, team notified). No-code tools let you set up the row without buying a factory. Code lets you build a factory when the row gets complicated.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free Zapier account and build one tiny automation: e.g., "When I star an email, add a row to a Google Sheet." Watch a domino fall by itself. (This is automation #1 — portfolio-worthy.)</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Webhooks trigger actions across services; no-code tools wire them up fast. Use the simplest tool that solves the problem.</div>
   `,
@@ -844,7 +1125,13 @@ LESSONS.push({
   <p>A <strong>database</strong> is where an app stores information that must persist — customers, bookings, conversation history. Think of it as the app's long-term memory (versus the model's short-term context window).</p>
   <h3>Git and GitHub</h3>
   <p><strong>Git</strong> is a system that tracks changes to your code (like a super-powered undo history). <strong>GitHub</strong> is a website where you store and share that code. Every engineer uses it daily, and it's where your portfolio will live.</p>
-  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Git is the "track changes + version history" of code. GitHub is Google Drive for code — a shared home where your projects live and others can see them.</div>
+
+  <h3>Going deeper</h3>
+  <p>The cloud comes in several "layers" that are worth knowing by name. <strong>IaaS</strong> (Infrastructure as a Service — e.g., AWS EC2) gives you a raw virtual computer you configure yourself. <strong>PaaS</strong> (Platform as a Service — e.g., Heroku, Render) gives you a managed environment where you just upload your code and the platform handles the rest. For a beginner deploying their first project, PaaS is almost always the right starting point — far less configuration, far faster to get something running.</p>
+  <p>Git works by saving "commits" — snapshots of your code at a point in time. The habit of committing often with short, clear messages ("add lead-capture tool" or "fix API key handling") means you always have a safe point to go back to. Most disasters in software happen when people work for hours without committing and then something breaks — they lose everything since the last save. Commit small, commit often.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Git is the "track changes + version history" of code. GitHub is Google Drive for code — a shared home where your projects live and others can see them. A commit is like hitting "Save" on a document, except it keeps every previous save forever and you can name each one.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Make a free GitHub account. Create a new repository, and upload one of your Colab notebooks (download it as .ipynb, then drag it into GitHub). Your code now lives somewhere other than your laptop — and you can link to it.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>The cloud = always-on rented computers; databases = an app's long-term memory; Git/GitHub = version history + a shared home for your code.</div>
   `,
@@ -866,6 +1153,23 @@ LESSONS.push({
   <p>Remember your API key must stay secret. In real apps you never paste it into the code. You store it as an <strong>environment variable</strong> (a secret setting kept outside the code) so it never ends up on GitHub for the world to see.</p>
   <h3>Security & privacy</h3>
   <p>Deployed apps handle real customer data, so you must encrypt sensitive data, protect keys, and follow privacy rules. For an FDE working inside a customer's systems, this is non-negotiable.</p>
+
+  <h3>Going deeper</h3>
+  <p>Environment variables are stored in the system running your app, not in your code files. In Colab you can simulate this with a simple assignment: <code>import os; os.environ["OPENAI_KEY"] = "sk-..."</code>. In a real deployed app (on Render, Heroku, or AWS) you enter the key in the platform's dashboard under "Environment Variables" or "Secrets" — then your code reads it with <code>os.environ["OPENAI_KEY"]</code> and it never touches your codebase at all. One accidental GitHub commit with a key pasted in can result in that key being found by automated bots within minutes — this is not hypothetical, it happens constantly.</p>
+  <p>For Mihron AI specifically, deployed voice agents will handle caller phone numbers, personal details, and appointment times — this is personal data that falls under privacy regulations depending on your clients' locations (GDPR in Europe, CCPA in California, etc.). As an FDE you won't need to be a lawyer, but you must understand that personal data has rules around how it's stored, accessed, and deleted — and build with that in mind from the start rather than trying to bolt it on later.</p>
+
+  <pre><code><span class="cmt"># The right way to use your API key in any real script</span>
+import os   <span class="cmt"># the os module lets you read environment variables</span>
+
+api_key = os.environ.get("OPENAI_KEY")   <span class="cmt"># reads the key from the environment</span>
+
+if not api_key:
+    print("Error: OPENAI_KEY environment variable is not set.")
+else:
+    from openai import OpenAI
+    client = OpenAI(api_key=api_key)     <span class="cmt"># key never appears in the code itself</span>
+    print("Client ready.")</code></pre>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>Building a feature on your laptop is cooking a great dish at home. <em>Deploying</em> it is opening a restaurant — now it must work consistently, safely, for many people, every day.</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Open one of your scripts and list every secret in it (API keys, passwords). For each, note: "this must become an environment variable, never committed to GitHub." That habit will save you real trouble.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Deploying = running reliably for real users. Docker standardizes the package; secrets stay in environment variables; security & privacy are non-negotiable.</div>
@@ -890,7 +1194,13 @@ LESSONS.push({
   </ul>
   <h3>A tale of two engineers</h3>
   <p>Two engineers build the same chatbot. The FDE is the one who first sat with the customer, learned that 60% of missed revenue came from after-hours calls, scoped the <em>smallest</em> thing that would fix it, built it into their existing phone system, and was there when it went live. Same code — completely different value.</p>
-  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An FDE is a translator and a doctor in one: they listen to the symptoms in plain language, diagnose the real problem, and prescribe the smallest effective treatment.</div>
+
+  <h3>Going deeper</h3>
+  <p>The "translation" skill is concrete and learnable. There's a simple question framework that FDEs use during discovery conversations with clients: (1) "What's the most painful thing you do that takes time but feels repetitive?" (2) "What would it mean for your business if that was handled automatically?" (3) "What data or systems would I need to touch?" These three questions surface 80% of what you need to scope a useful AI project — before you write a single line of code.</p>
+  <p>T-shaped skills matter here too. Knowing a little about many areas — databases, APIs, voice systems, UI, billing — means you can hold a conversation with a client's IT team, their sales manager, and their accountant in the same week, and translate between them. You don't need deep expertise in all of it; you need just enough to ask the right questions and flag the real blockers. An FDE who only knows code but can't explain their solution to a non-technical executive is only doing half the job.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>An FDE is a translator and a doctor in one: they listen to the symptoms in plain language, diagnose the real problem, and prescribe the smallest effective treatment. They don't show up with a hammer looking for nails — they first find out what hurts.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Write a one-page "discovery note" for a real business (Mihron AI is perfect): What's their biggest problem? What could AI do about it? What would you need to build it? What could go wrong? This is exactly how FDE engagements start.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>An FDE's superpower is translation — turning "we waste hours on X" into a concrete, smallest-useful thing you can build. The code is only part of the job.</div>
   `,
@@ -916,6 +1226,11 @@ LESSONS.push({
     <li><strong>What could go wrong:</strong> hallucinations? missing info? Plan a fallback ("I don't know — let me connect you to a human").</li>
   </ol>
   <p>Then start building the smallest version in Colab, reusing your Week 16 baby-RAG as the foundation. Add one tool that "captures a lead" (for now, it can just print/save the name and question).</p>
+
+  <h3>Going deeper</h3>
+  <p>The "smallest version" principle has a name in the startup world: a <strong>Minimum Viable Product</strong> (MVP). But in AI engineering it's even more important than in traditional software, because AI systems can fail in unpredictable ways — hallucinating, misunderstanding, or giving inconsistent answers. Building the smallest version first means you discover those failure modes early, when fixing them is cheap. If you build the full thing first, you might discover a fundamental flaw on launch day.</p>
+  <p>Your capstone's "what could go wrong" list is also a testing checklist. Before you call it done, you should have tested each risk item: what does it say when asked something outside the doc? What if the lead's name is left blank? What if the question is ambiguous? Running through these edge cases is the difference between a project that looks good in a demo and one that holds up in real use. Employers notice this — it signals that you think like a professional engineer, not just a student.</p>
+
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>Build the skateboard before the car. A working skateboard you can ride beats a beautiful car with no engine. Ship the smallest useful version first, then improve.</div>
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Fill in the 5-point design checklist for your capstone, then build the smallest working version: answer questions from a doc + capture a lead's name. Don't polish yet — just get it running end-to-end.</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Scope small, design first, then build the smallest version that actually works end-to-end. Finished beats fancy.</div>
@@ -946,6 +1261,11 @@ LESSONS.push({
     <li><strong>What you learned</strong> — honest reflection.</li>
   </ol>
   <div class="callout c-an"><span class="ct">🧠 Analogy</span>A README is the label on the jar. The project is the jam; the label tells people what's inside, why they'd want it, and what it's made of.</div>
+
+  <h3>Going deeper</h3>
+  <p>The "what I learned" section of your README is the most underrated part. Employers reading portfolios often skim the technical description — they've seen many of them. What catches their eye is an honest reflection that shows you can learn, iterate, and self-assess. "I initially had the model hallucinate on out-of-scope questions; I fixed this by adding a grounding instruction and testing with 10 questions the FAQ doesn't cover" tells a much more compelling story than "I built a Q&amp;A bot."</p>
+  <p>The polishing step — especially testing the "I don't know" fallback — has a direct parallel in production AI engineering. Before a Mihron AI voice agent goes live for a client, it goes through an "adversarial testing" phase where someone deliberately asks questions the agent shouldn't answer, provides nonsense inputs, and tries to confuse it. Any agent that passes this kind of red-team test is far more trustworthy than one that only works in the happy path. Even a brief version of this on your capstone shows you understand that real systems face real chaos.</p>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Finish your capstone, then write its README (4 sections above). Put both on GitHub. You now have a real, explainable portfolio project — milestone #6 unlocked. 🎉</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>Finish, test the fallback, and write a clear README. Being able to <em>explain</em> your project is as valuable as building it.</div>
   `,
@@ -969,7 +1289,13 @@ LESSONS.push({
   </ul>
   <h3>Interview basics</h3>
   <p>FDE interviews probe three things: can you build (a coding/AI exercise), can you think about a customer's problem (a scenario), and can you communicate (explaining clearly). Your capstone + discovery note are perfect practice for the last two.</p>
-  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Your portfolio is your highlight reel. Employers don't want to hear you <em>could</em> play — they want to see you score. Small working projects are your goals on tape.</div>
+
+  <h3>Going deeper</h3>
+  <p>When you walk an interviewer through a portfolio project, lead with the business problem, not the technology. "I built a RAG pipeline using embeddings and a vector store" is interesting to engineers. "I built a tool that lets a small medical practice answer patient FAQs automatically, cutting receptionist call volume by answering the 20 most common questions 24/7" is interesting to everyone — and it shows you think like an FDE, not just a developer. Lead with impact, follow with how.</p>
+  <p>Your Mihron AI background is a genuine differentiator. Most FDE candidates are software engineers learning the business side. You're an AI business operator learning the technical side — that's rarer and, in many ways, more valuable. An FDE who already understands the customer's world (missed calls, after-hours revenue, booking friction) from running a real business can build better solutions faster than someone who has to learn that context from scratch on the job. Lean into that story — it's true and it's yours.</p>
+
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Your portfolio is your highlight reel. Employers don't want to hear you <em>could</em> play — they want to see you score. Small working projects are your goals on tape. And your Mihron AI story is the team you played for — real experience, not a classroom.</div>
+
   <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Do three things this week: (1) put all projects on GitHub with READMEs, (2) update your LinkedIn headline toward "AI builder / aspiring Forward Deployed Engineer," (3) write your own next-6-months plan (see the Finish Line lesson for the exact next 3 topics).</div>
   <div class="callout c-key"><span class="ct">🔑 Key idea</span>A portfolio of small, working, explained projects + your real Mihron AI story is your strongest path into an FDE role.</div>
   `,
