@@ -206,7 +206,7 @@ pre code{display:block;padding:16px 16px;font-family:"SF Mono",Menlo,Consolas,mo
     <div class="ck">Certificate of Completion</div>
     <h3>This certifies that</h3>
     <div class="cname" id="certName">Learner</div>
-    <div class="ctitle">has completed all six months of <b>AI Foundations → Forward Deployed Engineer</b>, mastering AI fundamentals, Python, APIs, RAG, agents, and the FDE craft.</div>
+    <div class="ctitle">has completed <b>AI Foundations → Forward Deployed Engineer</b>, mastering AI fundamentals, Python, APIs, RAG, agents, the FDE craft, and the Advanced AI Agent Architect track.</div>
     <div class="cmeta">
       <div>Completed<b id="certDate">—</b></div>
       <div>Program<b>6-Month · 26 Weeks · 28 Lessons</b></div>
@@ -1305,7 +1305,204 @@ LESSONS.push({
   ]
 });
 
-// __INSERT_LESSONS__
+/* ============ ADVANCED TRACK ============ */
+LESSONS.push({
+  id:"adv0", group:"🚀 Advanced Track · Agent Architect", short:"★ Advanced Track intro",
+  title:"Advanced Track — Become an AI Agent Architect",
+  objective:"See the elite path beyond the foundations: autonomous agents, multi-agent systems, and production AI.",
+  body:`
+  <p>Welcome to the <strong>Advanced Track</strong>. The six months you've done make you a capable AI builder. This track takes you to the next level: an <strong>AI Agent Architect</strong> — someone who designs autonomous, multi-agent, production-grade AI systems. This is the skill set behind the top AI-engineering roles.</p>
+  <p>Don't start here. Finish the foundations first (especially Months 5–6 on agents and deployment). Then use this track as your advanced roadmap — each module below is a serious topic you'll grow into.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>The foundations taught you to build a reliable car. This track teaches you to design a whole fleet of self-driving vehicles that coordinate, recover from failures, and run safely in the real world.</div>
+  <h3>The four phases</h3>
+  <div class="cmap">
+    <div class="ccap cstart">✅ You are here: Foundations complete</div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">P1</div><div><h4>Foundations of the Autonomous Agent</h4><div class="cm-sub">Single-agent cognition, tool use, control flow (ReAct)</div></div></div><div class="cm-win">Modules 1–2</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">P2</div><div><h4>Scalable Multi-Agent Architecture</h4><div class="cm-sub">Agent teams, persistent memory, optimization</div></div></div><div class="cm-win">Modules 3–4</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">P3</div><div><h4>Production, Trust &amp; Portfolio</h4><div class="cm-sub">Safety, human oversight, deployment, evaluation</div></div></div><div class="cm-win">Modules 5–6</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="cnode"><div class="cm-h"><div class="cm-badge">P4</div><div><h4>The Frontier</h4><div class="cm-sub">Self-improving agents, autonomous exploration</div></div></div><div class="cm-win">Modules 7–8</div></div>
+    <div class="cconn"></div><div class="carrow">▼</div>
+    <div class="ccap cgoal">🎯 Top-1% AI Agent Architect + 8 production project labs</div>
+  </div>
+  <h3>Tools you'll meet across the track</h3>
+  <p>Python, LangChain (LCEL), LangGraph (state machines), CrewAI, Pydantic, FastAPI, Docker, Git, vector databases (Weaviate/Pinecone), LiteLLM, guardrail libraries (Llama Guard, NeMo Guardrails), and monitoring (Prometheus/Grafana).</p>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>An <em>agent</em> does a task; an <em>architect</em> designs systems of agents that are reliable, safe, and production-ready. This track is that leap.</div>
+  <p style="color:var(--muted);font-size:13px;margin-top:18px">Advanced-track roadmap adapted from the "AI Agent Architect" roadmap by Aiswarya Venkitesh, rewritten here in this course's beginner-friendly teaching style.</p>
+  `,
+  quiz:[]
+});
+LESSONS.push({
+  id:"advm1", group:"🚀 Advanced Track · Agent Architect", short:"P1 · M1 — Flow & Tool Use",
+  title:"Phase 1 · Module 1 — Sequential Flow & Tool Use",
+  objective:"Turn a raw LLM into a reliable, multi-step tool-using agent.",
+  body:`
+  <p>The goal of this module is reliability: making an agent move through predefined steps with predictable inputs and outputs. Four building blocks.</p>
+  <h3>1.1 Advanced prompt engineering for control</h3>
+  <p>Define an agent <strong>persona</strong> (role-based prompting), set strict constraints and output formats using <strong>delimiters</strong>, and use <strong>few-shot examples</strong> to lock in robust behavior.</p>
+  <h3>1.2 Prompt chaining (the pipeline pattern)</h3>
+  <p>Connect several model calls in sequence so the output of one becomes the input of the next, using <strong>LangChain Expression Language (LCEL)</strong> — building blocks like RunnableSequence and RunnablePassthrough keep data flowing reliably.</p>
+  <h3>1.3 Structured output with Pydantic</h3>
+  <p>Raw text output is fragile in production. You define a precise <strong>output schema</strong> with a Pydantic model and use an output parser to turn the LLM's JSON into clean Python objects you can trust.</p>
+  <h3>1.4 Tool use (function calling) mechanics</h3>
+  <p>Define Python functions as <strong>tools</strong>, generate the tool schema the LLM reads, and build the execution layer that actually runs the chosen tool and returns the result.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Pydantic is a quality-control inspector on a factory line: nothing leaves unless it matches the exact spec, so the next station never gets a malformed part.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 1 — Multi-Step Structured Data Extractor</span>Build an agent that takes unstructured text (an email or a contract clause) and runs it through a reliable pipeline to produce a validated financial summary — packaged as a clean, async Python function you'll reuse as an API service later.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Production agents need structure, not vibes: personas, schemas (Pydantic), and well-defined tools make behavior predictable.</div>
+  `,
+  quiz:[{q:"Why use Pydantic for an agent's output?",options:["To make prompts shorter","To enforce a precise, validated output schema instead of fragile raw text","To call more models","To store API keys"],answer:1,explain:"Pydantic validates the structure so downstream code can trust the data."}]
+});
+LESSONS.push({
+  id:"advm2", group:"🚀 Advanced Track · Agent Architect", short:"P1 · M2 — ReAct & Routing",
+  title:"Phase 1 · Module 2 — Control Flow & Decision Making",
+  objective:"Give agents dynamic control: reasoning loops, routing, and parallelism.",
+  body:`
+  <p>Now the agent chooses its own path instead of following a fixed script.</p>
+  <h3>2.1 ReAct (Reasoning + Acting)</h3>
+  <p>The core loop: <strong>Thought &gt; Action &gt; Observation &gt; Thought</strong>… The agent thinks about what to do, takes an action (a tool call), observes the result, and reasons again — self-correcting as it goes. You design the ReAct prompt and manage the conversation history as it runs.</p>
+  <h3>2.2 Routing (conditional execution)</h3>
+  <p>Use the LLM to <strong>classify intent</strong>, then branch: send each request to the right specialized sub-chain. This is how one system handles many different kinds of tasks.</p>
+  <h3>2.3 Parallelization (concurrency)</h3>
+  <p>Spot independent sub-tasks, run them at the same time, then merge and synthesize the results — much faster than doing everything in sequence.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>ReAct is a detective: form a hunch, check a clue, update the theory, repeat — until the case is solved.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 2 — Dynamic Service Router &amp; Executor</span>Build a dispatch system that uses LLM routing to triage user queries and executes them with the ReAct loop. Then make it production-ready: expose it as a REST API with <strong>FastAPI</strong>, package it with <strong>Docker</strong>, and test the logic with <strong>Pytest</strong>.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>ReAct (think→act→observe→repeat), routing (branch by intent), and parallelization (do independent work at once) are the three pillars of agent control flow.</div>
+  `,
+  quiz:[{q:"The ReAct loop is:",options:["Read → Act","Thought → Action → Observation → repeat","Route → Cache","Reason → Cache → Test"],answer:1,explain:"ReAct = reason, act with a tool, observe the result, then reason again."}]
+});
+LESSONS.push({
+  id:"advm3", group:"🚀 Advanced Track · Agent Architect", short:"P2 · M3 — Multi-Agent Teams",
+  title:"Phase 2 · Module 3 — Multi-Agent Collaboration",
+  objective:"Orchestrate teams of specialized agents that cooperate.",
+  body:`
+  <p>One agent can only do so much. This module is about <strong>teamwork</strong> — many specialized agents working together under coordination.</p>
+  <h3>3.1 Multi-agent design principles</h3>
+  <p>Decide how to <strong>delegate roles</strong>, pick a <strong>collaboration model</strong> (hierarchical vs. sequential), and learn a framework built for this — <strong>CrewAI</strong>.</p>
+  <h3>3.2 State management &amp; cyclical workflows</h3>
+  <p>Model the system as a <strong>state machine</strong> and implement looping, cyclical flows with <strong>LangGraph</strong>. <strong>Checkpointers</strong> save the state so work can pause, resume, and recover.</p>
+  <h3>3.3 Inter-agent communication</h3>
+  <p>Standardize how agents talk: <strong>Model Context Protocol (MCP)</strong> concepts and <strong>Agent-to-Agent (A2A)</strong> "agent cards" let diverse agents cooperate across frameworks.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>You're no longer a solo worker — you're the manager of a team. Each agent is a specialist; your job is delegation, coordination, and clear communication between them.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 3 — Hierarchical Research Crew</span>Build a system where a Project-Manager agent breaks a broad topic into sub-tasks, delegates them to specialized Research agents running in parallel, and a Synthesis agent combines everything into one report.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Multi-agent systems = roles + orchestration (LangGraph/CrewAI) + a shared communication protocol (MCP/A2A).</div>
+  `,
+  quiz:[]
+});
+LESSONS.push({
+  id:"advm4", group:"🚀 Advanced Track · Agent Architect", short:"P2 · M4 — Memory & Optimization",
+  title:"Phase 2 · Module 4 — Persistent Knowledge & Optimization",
+  objective:"Give agents long-term memory and make them cost-aware.",
+  body:`
+  <p>This module builds the agent's "brain that remembers" and an awareness layer that optimizes for cost and speed.</p>
+  <h3>4.1 Long-term memory architectures</h3>
+  <p><strong>Semantic</strong> memory (facts), <strong>episodic</strong> memory (past events/conversations), and <strong>procedural</strong> memory (how to do things) — stored and retrieved via vector stores so the agent learns across sessions.</p>
+  <h3>4.2 Advanced RAG techniques</h3>
+  <p>Beyond basic RAG: <strong>GraphRAG</strong> (knowledge as a graph), smarter <strong>chunking strategies</strong>, and handling <strong>conflicting knowledge</strong> with source validation.</p>
+  <h3>4.3 Resource-aware optimization</h3>
+  <p><strong>Dynamic model switching</strong> (use a cheap model for easy tasks, a strong one for hard tasks), <strong>cost/latency monitoring</strong>, and <strong>graceful degradation</strong> when resources are tight.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Dynamic model switching is like choosing transport: walk for a block (cheap), drive across town, fly across the country. You match the tool to the trip instead of always flying.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 4 — Dynamic Query Router</span>Extend your Phase-1 router into a multi-model system that classifies queries as Simple Fact, Deep Reasoning, or Contextual RAG, and routes each to the most cost-effective model/tool — logging the chosen model and the cost/latency it saved.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Great agents remember (long-term memory + advanced RAG) and economize (route to the cheapest model that can do the job).</div>
+  `,
+  quiz:[{q:"What is 'dynamic model switching' for?",options:["Switching programming languages","Using the cheapest model that can handle each task to save cost/latency","Changing the UI theme","Rotating API keys"],answer:1,explain:"It matches each task to the most cost-effective capable model."}]
+});
+LESSONS.push({
+  id:"advm5", group:"🚀 Advanced Track · Agent Architect", short:"P3 · M5 — Safety & Governance",
+  title:"Phase 3 · Module 5 — Safety, Compliance & Human Governance",
+  objective:"Make agents safe, compliant, and supervised by humans.",
+  body:`
+  <p>Before an agent touches anything sensitive, it needs guardrails and human oversight. This is what separates a demo from an enterprise system.</p>
+  <h3>5.1 Guardrails &amp; safety patterns</h3>
+  <p>Layered defense: <strong>input validation/sanitization</strong>, <strong>behavioral constraints</strong>, <strong>tool-use restrictions</strong> (what the agent is allowed to do), and <strong>output filtering</strong> before anything reaches the user.</p>
+  <h3>5.2 Human-in-the-loop (HITL)</h3>
+  <p>Define <strong>escalation policies</strong> (when to pause and ask a human), build <strong>decision augmentation</strong> (the agent recommends, the human approves), and design the HITL interface.</p>
+  <h3>5.3 Exception handling &amp; recovery</h3>
+  <p><strong>Graceful degradation</strong> and <strong>state rollback</strong> so a failure mid-task doesn't cause damage — the system can undo and recover.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Guardrails + HITL are the brakes and the human driver in a self-driving car: the system is autonomous, but it can be stopped and a person can take over when stakes are high.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 5 — Financial Transaction Agent</span>Adapt your agent to handle sensitive (simulated) financial transactions, with strict safety protocols and mandatory human oversight before any action commits.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Production trust = layered guardrails + a human in the loop for high-stakes actions + the ability to roll back failures.</div>
+  `,
+  quiz:[{q:"What does Human-in-the-Loop (HITL) provide?",options:["Faster models","A human checkpoint to approve or stop high-stakes agent actions","Cheaper hosting","More training data"],answer:1,explain:"HITL inserts human approval/oversight where it matters most."}]
+});
+LESSONS.push({
+  id:"advm6", group:"🚀 Advanced Track · Agent Architect", short:"P3 · M6 — Deploy & Evaluate",
+  title:"Phase 3 · Module 6 — Enterprise Deployment & Evaluation",
+  objective:"Package, deploy, monitor, and prove your agent works.",
+  body:`
+  <p>This module turns the whole system into a deployable, observable, professionally documented product — and finalizes your portfolio.</p>
+  <h3>6.1 Deployment packaging</h3>
+  <p>Optimize <strong>Docker</strong> containers, add <strong>health checks</strong> and load balancing, and manage <strong>secrets/environment variables</strong> properly.</p>
+  <h3>6.2 Evaluation &amp; monitoring</h3>
+  <p>Track <strong>agent trajectories</strong> (the steps it took), key <strong>metrics</strong>, and use <strong>LLM-as-a-Judge</strong> to automatically grade output quality at scale.</p>
+  <h3>6.3 Portfolio &amp; credibility</h3>
+  <p>Create an <strong>architectural model card</strong> (documenting how your system works and its limits) and optimize your LinkedIn and resume around it.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>LLM-as-a-Judge is a tireless examiner: instead of you hand-checking thousands of answers, a model grades them against your rubric.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 6 — Production-Ready Portfolio</span>Deploy your Phase-3 agent (with HITL and guardrails) as a public-facing API service — the centerpiece of your architect portfolio.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>If you can't deploy it, monitor it, and prove it works, it isn't production. Packaging + evaluation + documentation make it real.</div>
+  `,
+  quiz:[]
+});
+LESSONS.push({
+  id:"advm7", group:"🚀 Advanced Track · Agent Architect", short:"P4 · M7 — Advanced Reasoning",
+  title:"Phase 4 · Module 7 — Advanced Reasoning & Adaptive Learning",
+  objective:"Build agents that reason in sophisticated ways and learn from outcomes.",
+  body:`
+  <p>The frontier: systems that change their own reasoning strategy and improve from experience.</p>
+  <h3>7.1 Advanced reasoning techniques</h3>
+  <p><strong>Tree-of-Thought (ToT)</strong> explores multiple solution paths; <strong>Chain of Debates (CoD)</strong> has agents argue to a better answer; <strong>Program-Aided Language models (PAL)</strong> offload exact computation to code.</p>
+  <h3>7.2 Learning &amp; adaptation</h3>
+  <p><strong>Self-improving agents</strong> (SICA/AlphaEvolve concepts) and <strong>Reinforcement Learning with Verifiable Rewards (RLVR/DPO)</strong> — agents that get better by checking their own results against verifiable signals.</p>
+  <h3>7.3 Scaling inference law</h3>
+  <p>The trade-off between model size and "thinking time" (compute at inference), and using dynamic routing to spend compute only where it pays off.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>Tree-of-Thought is brainstorming several plans on a whiteboard and pursuing the most promising branch — instead of committing to the first idea.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 7 — Adversarial Debate Agent</span>Build a two-agent system: Agent A proposes a technical strategy and Agent B is the designated Skeptic/Critic. They debate for a fixed number of rounds, logging agreements, disagreements, and the final validated consensus.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Top agents reason in branches and debates (ToT/CoD/PAL) and improve themselves from verifiable feedback (RLVR/DPO).</div>
+  `,
+  quiz:[]
+});
+LESSONS.push({
+  id:"advm8", group:"🚀 Advanced Track · Agent Architect", short:"P4 · M8 — Autonomous Exploration",
+  title:"Phase 4 · Module 8 — Autonomous Exploration",
+  objective:"Design agents for open-ended discovery — and optimize the team itself.",
+  body:`
+  <p>The capstone of the frontier: agents that explore unknown problems and systems that tune their own structure.</p>
+  <h3>8.1 Exploration &amp; discovery architectures</h3>
+  <p>The <strong>Google Co-Scientist</strong> model — a multi-agent system for autonomous hypothesis generation — and the <strong>Generate → Debate → Evolve</strong> loop for open-ended research that finds and fills knowledge gaps.</p>
+  <h3>8.2 Multi-Agent System Search (MASS)</h3>
+  <p>Optimizing the team itself: <strong>prompt optimization</strong> (block-level and workflow-level) and <strong>topology optimization</strong> (dynamically changing the team's structure for better results).</p>
+  <h3>8.3 Final portfolio &amp; system architecture</h3>
+  <p>Master professional documentation for complex systems and synthesize all four phases into one coherent architect narrative.</p>
+  <div class="callout c-an"><span class="ct">🧠 Analogy</span>MASS is a coach reshuffling the team's line-up and playbook between games to keep winning — the system improves how it's organized, not just what it does.</div>
+  <div class="callout c-try"><span class="ct">✅ Project Lab 8 — Autonomous Market Trend Spotter</span>Build a collaborative agent system that autonomously identifies an emerging market trend and produces a full competitive-analysis report.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>The elite frontier: agents that explore the unknown (Co-Scientist) and systems that optimize their own prompts and team topology (MASS).</div>
+  `,
+  quiz:[]
+});
+LESSONS.push({
+  id:"advlabs", group:"🚀 Advanced Track · Agent Architect", short:"🧰 The 8 Project Labs",
+  title:"The Project Lab Portfolio — 8 Production Builds",
+  objective:"Your advanced portfolio: eight production-grade projects.",
+  body:`
+  <p>This track is built around <strong>doing</strong>. Completing these eight project labs gives you a portfolio that signals "AI Agent Architect," not "tutorial follower." Use them as your checklist.</p>
+  <ol>
+    <li><strong>Multi-Step Structured Data Extractor</strong> — a reliable pipeline that turns messy text into validated data.</li>
+    <li><strong>Dynamic Service Router &amp; Executor</strong> — LLM routing + ReAct, deployed as a FastAPI/Docker service.</li>
+    <li><strong>Hierarchical Research Crew</strong> — a manager agent delegating to parallel research agents.</li>
+    <li><strong>Dynamic Query Router</strong> — multi-model routing that proves cost/latency savings.</li>
+    <li><strong>Financial Transaction Agent</strong> — sensitive actions with strict guardrails + human oversight.</li>
+    <li><strong>Production-Ready Portfolio</strong> — your Phase-3 agent deployed as a public API.</li>
+    <li><strong>Adversarial Debate Agent</strong> — two agents debating to a validated consensus.</li>
+    <li><strong>Autonomous Market Trend Spotter</strong> — a collaborative system producing a competitive-analysis report.</li>
+  </ol>
+  <div class="callout c-an"><span class="ct">🧠 The shift in thinking</span>Before: scattered tutorials, agents that break in production, no clear path. After: systematic mastery, a portfolio of production-ready systems, and companies recruiting you for senior AI roles.</div>
+  <div class="callout c-try"><span class="ct">✅ Try it yourself</span>Pick <em>one</em> lab that excites you most and outline it: what it does, which patterns it uses (ReAct? multi-agent? guardrails?), and what "done and deployed" looks like. Start there.</div>
+  <div class="callout c-key"><span class="ct">🔑 Key idea</span>Eight deployed labs across reliability, multi-agent teamwork, safety, and the frontier = a portfolio that gets you hired as an architect.</div>
+  `,
+  quiz:[]
+});
 
 /* ============ FINISH ============ */
 LESSONS.push({
@@ -1322,6 +1519,7 @@ LESSONS.push({
   <div class="mile"><div class="n">4</div><div><strong>A document Q&A bot</strong> — AI that answers from your own files (RAG).</div></div>
   <div class="mile"><div class="n">5</div><div><strong>A small automation / agent</strong> — AI that takes actions.</div></div>
   <div class="mile"><div class="n">6</div><div><strong>A capstone + portfolio</strong> — a real project you can show employers.</div></div>
+  <div class="mile"><div class="n">★</div><div><strong>The Advanced Track</strong> — the AI Agent Architect path: autonomous agents, multi-agent systems, production safety, and 8 project labs.</div></div>
   <p style="margin-top:22px"><button class="btn primary" onclick="showCertificate()">🎓 Get your certificate of completion</button></p>
   <h3>Your exact next 3 things to study</h3>
   <ol>
